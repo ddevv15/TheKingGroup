@@ -75,14 +75,13 @@ export default function AboutPage() {
                 <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">Our Story</h2>
                 <div className="space-y-4 text-lg text-muted leading-relaxed">
                   <p>
-                    Founded in 1995, The King Group began as a modest rice exporter in Mumbai with a vision to bridge
-                    the gap between Asia's agricultural abundance and global demand. What started with a single
-                    container of premium Basmati rice has grown into a diversified agri-export powerhouse.
+                  {/* The King Group, a consortium of established companies including Zeal Export (2014), King Trading Corporation (2016), and The Karunesh Corporation (2019), has built a global reputation for excellence in agri-trade. From sourcing raw cashews in Africa to exporting premium rice, oilseeds, spices, and tiles from Asia, we bridge continents through quality, reliability, and trust. */}
+                  Established across Gujarat and with operations in multiple continents, The King Group and Shree Vallabh Tradelinks collectively represent a legacy of excellence in global trading.
+Beginning with Komal Amin Exports Pvt. Ltd. (2007–2015), founder Vicky N. Patel laid the foundation for modern cotton and agri-exports.
+In 2014, Zeal Export was formed, followed by King Trading Corporation (2016) and The Karunesh Corporation (2019). Karunesh Partner Ltd. and The NKB Corporation (2025) now strengthen the group’s international partnerships.
                   </p>
                   <p>
-                    Today, we source and supply eight major product categories from India, Vietnam, and Thailand to over
-                    40 countries across Africa, the Middle East, Europe, and the Americas. Our success is built on
-                    unwavering commitment to quality, reliability, and sustainable practices.
+                  Our operations span India, Vietnam, Thailand, and several African countries, with exports reaching the Middle East, Europe, and the Americas. Through constant innovation, ethical sourcing, and robust logistics, we ensure value to every client we serve.
                   </p>
                   <p>
                     With strategic partnerships across the supply chain—from farmers and processors to logistics
@@ -112,9 +111,9 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-2xl font-serif font-bold mb-4">Our Mission</h3>
                 <p className="text-muted leading-relaxed">
-                  To be the most trusted partner in global agri-export by delivering premium quality products,
-                  maintaining sustainable practices, and fostering long-term relationships that create value for all
-                  stakeholders.
+                {/* To deliver high-quality agricultural and industrial products with transparency, consistency, and long-term partnerships that strengthen global food and trade networks. */}
+                To deliver value through transparency, reliability, and quality.
+We aim to create sustainable relationships by connecting trusted suppliers with global buyers while ensuring timely delivery and strict adherence to standards.
                 </p>
               </div>
               <div className="bg-white p-8 rounded-lg shadow-sm">
@@ -123,8 +122,8 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-2xl font-serif font-bold mb-4">Our Vision</h3>
                 <p className="text-muted leading-relaxed">
-                  To become the leading global agri-export company recognized for innovation, sustainability, and
-                  excellence, connecting continents through quality products and ethical business practices.
+                {/* To become a globally recognized leader in agricultural exports by upholding uncompromising quality and sustainability. */}
+                To become a globally recognized leader in agricultural exports by upholding uncompromising quality and sustainability.
                 </p>
               </div>
             </div>

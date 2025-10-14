@@ -115,6 +115,12 @@ export default function SustainabilityPage() {
               farm to final destination, we implement practices that protect our planet, support communities, and ensure
               the highest quality products for our customers.
             </p>
+            <p className="text-lg text-muted leading-relaxed">
+            Every shipment undergoes lab testing by government-approved agencies before dispatch.
+Warehouses equipped with fumigation facilities and trained staff ensure hygiene and traceability.
+We practice safe handling, clean storage, and eco-compliant packaging as per BIS export standards.
+Committed to organic and sustainable cotton through ECOCERT, Control Union, and OneCert certifications.
+            </p>
           </div>
         </section>
 

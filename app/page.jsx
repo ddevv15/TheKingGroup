@@ -93,8 +93,7 @@ export default function HomePage() {
               Global Excellence in Agri-Export
             </h1>
             <p className="text-xl md:text-2xl mb-10 text-white/95 max-w-3xl mx-auto text-balance leading-relaxed">
-              Connecting quality agricultural products from Asia to markets across Africa, Middle East, Europe, and the
-              Americas
+            Global Exporters of Cotton, Yarn, Spices, Tiles, and Agro Products — Connecting Markets with Quality and Trust.
             </p>
             <a
               href="/products"
@@ -112,9 +111,9 @@ export default function HomePage() {
               Bridging Continents Through Quality
             </h2>
             <p className="text-xl text-muted leading-relaxed">
-              The King Group stands as a trusted partner in global agri-export, delivering premium products sourced from
-              the finest regions of India, Vietnam, and Thailand. With decades of expertise and an unwavering commitment
-              to quality, we serve distributors, manufacturers, and retailers across four continents.
+            The King Group is a consortium of export-oriented companies including Zeal Export (2014), King Trading Corporation (2016), and The Karunesh Corporation (2019), all operating under a shared vision of excellence and reliability.
+Backed by decades of expertise through Komal Amin Exports Pvt. Ltd. (2007 – 2015) and Shree Gurukrupa Traders (1985), we have built a strong foundation in cotton, agri-products, and commodity trading.
+Our global presence spans Asia, Africa, the Middle East, and the Americas, supported by trusted suppliers, advanced logistics, and customer-focused operations.
             </p>
           </div>
         </section>

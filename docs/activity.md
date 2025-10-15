@@ -12,3 +12,8 @@ Date: 2025-10-13
 
 - Prompt: "fix this syntax error"
   - Action: Deleted broken duplicate `app/page.tsx` which caused a 500 and syntax error; retained working `app/page.jsx`.
+
+Date: 2025-10-15
+
+- Prompt: "Provide me with what tech stack we are using in this project, and for styling are we using tailwind css or just css/"
+  - Action: Reviewed `package.json`, `postcss.config.mjs`, and `styles/globals.css` to identify the stack and styling setup. Confirmed Next.js 15 with React 19 and TypeScript, plus Tailwind CSS v4 configured via `@tailwindcss/postcss` and `@import 'tailwindcss'` in global CSS. No code changes required.

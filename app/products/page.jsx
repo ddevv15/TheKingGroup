@@ -127,7 +127,7 @@ export default function ProductsPage() {
   return (
     <>
       <Header />
-      <main className="pt-16">
+      <main className="pt-28">
         {/* Hero Section */}
         <section className="relative py-32 bg-primary text-primary-foreground overflow-hidden">
           <div className="absolute inset-0 opacity-10">

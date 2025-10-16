@@ -1,6 +1,6 @@
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import { Globe, MapPin } from "lucide-react"
+import { Globe, MapPin, Phone, Mail, Clock } from "lucide-react"
 
 export default function GlobalPresencePage() {
   const regions = [
@@ -63,18 +63,73 @@ export default function GlobalPresencePage() {
   ]
 
   const offices = [
-    { city: "Mumbai", country: "India", type: "Headquarters" },
-    { city: "Ho Chi Minh City", country: "Vietnam", type: "Regional Office" },
-    { city: "Bangkok", country: "Thailand", type: "Regional Office" },
-    { city: "Dubai", country: "UAE", type: "Regional Office" },
-    { city: "Lagos", country: "Nigeria", type: "Representative Office" },
-    { city: "Nairobi", country: "Kenya", type: "Representative Office" },
+    {
+      name: "Headquarters",
+      location: "Mumbai, India",
+      address: "123 Export Plaza, Andheri East, Mumbai 400069, India",
+      phone: "+91 22 1234 5678",
+      email: "india@thekinggroup.com",
+      hours: "Mon - Fri: 9:00 AM - 6:00 PM IST, Sat: 9:00 AM - 1:00 PM IST",
+      type: "Headquarters",
+      description:
+        "Our global headquarters and primary operations center, managing exports across all product categories.",
+    },
+    {
+      name: "Vietnam Office",
+      location: "Ho Chi Minh City, Vietnam",
+      address: "456 Nguyen Hue Boulevard, District 1, Ho Chi Minh City, Vietnam",
+      phone: "+84 28 1234 5678",
+      email: "vietnam@thekinggroup.com",
+      hours: "Mon - Fri: 8:30 AM - 5:30 PM ICT",
+      type: "Regional Office",
+      description: "Regional hub for Southeast Asian operations, specializing in rice and cashew procurement.",
+    },
+    {
+      name: "Thailand Office",
+      location: "Bangkok, Thailand",
+      address: "789 Sukhumvit Road, Khlong Toei, Bangkok 10110, Thailand",
+      phone: "+66 2 123 4567",
+      email: "thailand@thekinggroup.com",
+      hours: "Mon - Fri: 8:30 AM - 5:30 PM ICT",
+      type: "Regional Office",
+      description: "Strategic location for logistics coordination and quality control in Southeast Asia.",
+    },
+    {
+      name: "UAE Office",
+      location: "Dubai, UAE",
+      address: "321 Sheikh Zayed Road, Dubai, United Arab Emirates",
+      phone: "+971 4 123 4567",
+      email: "uae@thekinggroup.com",
+      hours: "Sun - Thu: 9:00 AM - 6:00 PM GST",
+      type: "Regional Office",
+      description: "Gateway to Middle East and African markets, handling distribution and client relations.",
+    },
+    {
+      name: "Nigeria Office",
+      location: "Lagos, Nigeria",
+      address: "Victoria Island, Lagos, Nigeria",
+      phone: "+234 1 234 5678",
+      email: "nigeria@thekinggroup.com",
+      hours: "Mon - Fri: 8:00 AM - 5:00 PM WAT",
+      type: "Representative Office",
+      description: "Supporting our largest African market with local presence and customer service.",
+    },
+    {
+      name: "Kenya Office",
+      location: "Nairobi, Kenya",
+      address: "Westlands, Nairobi, Kenya",
+      phone: "+254 20 123 4567",
+      email: "kenya@thekinggroup.com",
+      hours: "Mon - Fri: 8:00 AM - 5:00 PM EAT",
+      type: "Representative Office",
+      description: "East African hub for distribution and market development.",
+    },
   ]
 
   return (
     <>
       <Header />
-      <main className="pt-16">
+      <main className="pt-28">
         {/* Hero Section */}
         <section className="relative py-32 bg-primary text-primary-foreground overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -158,22 +213,75 @@ export default function GlobalPresencePage() {
           </div>
         </section>
 
-        {/* Office Locations */}
         <section className="py-20 bg-white">
           <div className="container">
-            <div className="text-center mb-12">
+            <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">Our Offices</h2>
-              <p className="text-lg text-muted max-w-2xl mx-auto">Strategic locations to serve you better</p>
+              <p className="text-lg text-muted max-w-2xl mx-auto">
+                Visit us at any of our strategically located offices around the world
+              </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {offices.map((office) => (
-                <div key={`${office.city}-${office.country}`} className="bg-secondary p-6 rounded-lg">
-                  <MapPin size={24} className="text-primary mb-3" />
-                  <h3 className="text-xl font-semibold mb-1">{office.city}</h3>
-                  <p className="text-sm text-muted mb-2">{office.country}</p>
-                  <span className="inline-block px-3 py-1 bg-white text-xs font-medium rounded-full">
-                    {office.type}
-                  </span>
+                <div
+                  key={office.name}
+                  className="bg-secondary p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow"
+                >
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="bg-primary text-primary-foreground p-3 rounded-lg">
+                      <MapPin size={28} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-serif font-bold mb-1">{office.name}</h3>
+                      <p className="text-sm text-accent font-medium">{office.type}</p>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-muted leading-relaxed mb-6">{office.description}</p>
+
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <MapPin size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium mb-1">Address</p>
+                        <p className="text-sm text-muted">{office.address}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <Phone size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium mb-1">Phone</p>
+                        <a
+                          href={`tel:${office.phone.replace(/\s/g, "")}`}
+                          className="text-sm text-primary hover:text-accent transition-colors"
+                        >
+                          {office.phone}
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <Mail size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium mb-1">Email</p>
+                        <a
+                          href={`mailto:${office.email}`}
+                          className="text-sm text-primary hover:text-accent transition-colors"
+                        >
+                          {office.email}
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <Clock size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium mb-1">Business Hours</p>
+                        <p className="text-sm text-muted">{office.hours}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

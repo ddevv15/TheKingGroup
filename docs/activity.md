@@ -1,19 +1,27 @@
-## Activity Log
+## 2025-10-16
 
-Date: 2025-10-13
+- Prompt: "Firstly scan the entire codebase and get a perfect understanding of the project, after that create me an env file so I can integrate my supabase keys to the project"
 
-- Prompt: "scan the codebase fix any dependency issues do not worry about the vcs I will set it up later on"
+- Actions:
 
-  - Action: Scanned imports and configs; identified `vaul` peer conflict with React 19; noted unnecessary `@types/react` and `@types/react-dom` with React 19.
+  - Scanned the project and identified Supabase usage in `lib/supabase.js` and `components/feedback-form.jsx`.
+  - Created `env.example` with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` placeholders.
+  - Confirmed `.gitignore` already ignores local env files (`.env*`).
 
-- Prompt: "fix this issue"
+- Notes:
+  - To use: copy `.env.example` to `.env.local` and fill in your Supabase Project URL and Anon Key.
+  - Feedback submissions insert into the `feedback` table via the Supabase client.
 
-  - Action: Removed `vaul` from `package.json` and deleted `components/ui/drawer.tsx` (unused). Removed `@types/react` and `@types/react-dom` from devDependencies. Ran `npm i --no-audit --no-fund --quiet` and install completed successfully with 0 conflicts.
+## 2025-10-16 (Health Check)
 
-- Prompt: "fix this syntax error"
-  - Action: Deleted broken duplicate `app/page.tsx` which caused a 500 and syntax error; retained working `app/page.jsx`.
+- Prompt: "Do not push the changes to the vcs yet, I have added keys to the env local file lets try and test out if the integration was successful?"
 
-Date: 2025-10-15
+- Actions:
 
-- Prompt: "Provide me with what tech stack we are using in this project, and for styling are we using tailwind css or just css/"
-  - Action: Reviewed `package.json`, `postcss.config.mjs`, and `styles/globals.css` to identify the stack and styling setup. Confirmed Next.js 15 with React 19 and TypeScript, plus Tailwind CSS v4 configured via `@tailwindcss/postcss` and `@import 'tailwindcss'` in global CSS. No code changes required.
+  - Added a Supabase health-check page at `app/debug/supabase/page.jsx`.
+  - Page verifies env presence, runs SELECT and optional INSERT against `feedback`.
+
+- How to use:
+  - Visit `/debug/supabase` in dev.
+  - Click "Run SELECT test" to verify read access.
+  - Optionally click "Run INSERT test" to verify write access (requires RLS policy).

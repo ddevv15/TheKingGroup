@@ -87,7 +87,7 @@ export default function SustainabilityPage() {
   return (
     <>
       <Header />
-      <main className="pt-16">
+      <main className="pt-28">
         {/* Hero Section */}
         <section className="relative py-32 bg-primary text-primary-foreground overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -114,12 +114,6 @@ export default function SustainabilityPage() {
               that economic success must go hand-in-hand with environmental stewardship and social responsibility. From
               farm to final destination, we implement practices that protect our planet, support communities, and ensure
               the highest quality products for our customers.
-            </p>
-            <p className="text-lg text-muted leading-relaxed">
-            Every shipment undergoes lab testing by government-approved agencies before dispatch.
-Warehouses equipped with fumigation facilities and trained staff ensure hygiene and traceability.
-We practice safe handling, clean storage, and eco-compliant packaging as per BIS export standards.
-Committed to organic and sustainable cotton through ECOCERT, Control Union, and OneCert certifications.
             </p>
           </div>
         </section>

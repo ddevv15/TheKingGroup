@@ -1,9 +1,11 @@
 import "./globals.css"
+import FeedbackButton from "@/components/feedback-button"
 
 export const metadata = {
   title: "The King Group - Global Agri-Export Excellence",
   description:
     "Leading global exporter of rice, cashew, cotton, oilseeds, spices, tiles, pharma, and supermarket products to Africa, Middle East, Europe, and Americas.",
+    generator: 'v0.app'
 }
 
 export default function RootLayout({ children }) {
@@ -17,7 +19,10 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <FeedbackButton />
+      </body>
     </html>
   )
 }

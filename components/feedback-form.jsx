@@ -101,7 +101,7 @@ export default function FeedbackForm({ isOpen, onClose }) {
             {/* Name */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Name <span className="text-gray-400">(optional)</span>
+                Name <span className="text-gray-400"></span>
               </label>
               <input
                 type="text"
@@ -117,7 +117,7 @@ export default function FeedbackForm({ isOpen, onClose }) {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email <span className="text-gray-400">(optional)</span>
+                Email <span className="text-gray-400"></span>
               </label>
               <input
                 type="email"

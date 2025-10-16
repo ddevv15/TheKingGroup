@@ -178,7 +178,7 @@ const CardNav = ({
             {logo ? (
               <img src={logo || "/placeholder.svg"} alt={logoAlt} className="logo h-[28px]" />
             ) : (
-              <span className="text-xl font-serif font-bold" style={{ color: menuColor || "#000" }}>
+              <span id="navbar-brand-the-king-group" className="text-xl font-bold" style={{ color: menuColor || "#000", fontFamily: 'DM Serif Display, Georgia, serif' }}>
                 {logoAlt}
               </span>
             )}

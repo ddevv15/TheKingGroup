@@ -173,7 +173,15 @@ const CardNav = ({
 
           <Link
             href="/"
-            className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded-md"
+            className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded-md"
+            onClick={(e) => {
+              // Remove focus after click to prevent focus ring from persisting
+              setTimeout(() => {
+                if (document.activeElement === e.currentTarget) {
+                  e.currentTarget.blur()
+                }
+              }, 0)
+            }}
           >
             {logo ? (
               <img src={logo || "/placeholder.svg"} alt={logoAlt} className="logo h-[28px]" />

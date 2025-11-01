@@ -1,9 +1,23 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { getSupabaseBrowserClient } from "@/lib/supabase"
+import { useRouter } from "next/navigation"
 
 export default function SupabaseHealthCheckPage() {
+  const router = useRouter()
+
+  // Security: Only allow access in development mode
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      router.push("/")
+    }
+  }, [router])
+
+  // Don't render in production
+  if (process.env.NODE_ENV === "production") {
+    return null
+  }
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 

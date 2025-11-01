@@ -7,6 +7,7 @@ import { MapPin, Package, CheckCircle, ArrowRight } from "lucide-react"
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all")
+  const [expandedSpecs, setExpandedSpecs] = useState({})
 
   const products = [
     {
@@ -146,7 +147,7 @@ export default function ProductsPage() {
         </section>
 
         {/* Category Filter */}
-        <section className="py-8 bg-white border-b border-border sticky top-16 z-40">
+        <section className="py-8 bg-white border-b border-border">
           <div className="container">
             <div className="flex gap-3 overflow-x-auto pb-2">
               {categories.map((category) => (
@@ -169,15 +170,15 @@ export default function ProductsPage() {
         {/* Products Grid */}
         <section className="py-20 bg-secondary">
           <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               {filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+                  className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow relative"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 h-[400px] overflow-hidden">
                     {/* Product Image */}
-                    <div className="relative h-64 md:h-full">
+                    <div className="relative h-full">
                       <img
                         src={product.image || "/placeholder.svg"}
                         alt={product.name}
@@ -191,12 +192,12 @@ export default function ProductsPage() {
                     </div>
 
                     {/* Product Details */}
-                    <div className="p-6 flex flex-col">
-                      <h3 className="text-2xl font-serif font-bold mb-2">{product.name}</h3>
-                      <p className="text-sm text-muted mb-4 leading-relaxed">{product.description}</p>
+                    <div className="p-6 flex flex-col h-full">
+                      <h3 className="text-2xl font-serif font-bold mb-3">{product.name}</h3>
+                      <p className="text-sm text-muted mb-5 leading-relaxed h-[3rem] overflow-hidden">{product.description}</p>
 
                       {/* Origin & Destinations */}
-                      <div className="mb-4 space-y-2">
+                      <div className="mb-5 space-y-2.5">
                         <div className="flex items-start gap-2">
                           <MapPin size={16} className="mt-1 flex-shrink-0 text-primary" />
                           <div>
@@ -214,7 +215,7 @@ export default function ProductsPage() {
                       </div>
 
                       {/* Varieties */}
-                      <div className="mb-4">
+                      <div className="mb-5 h-[3.5rem]">
                         <p className="text-xs font-semibold mb-2">Available Varieties</p>
                         <div className="flex flex-wrap gap-1">
                           {product.varieties.slice(0, 4).map((variety) => (
@@ -231,7 +232,7 @@ export default function ProductsPage() {
                       </div>
 
                       {/* CTA */}
-                      <div className="mt-auto">
+                      <div className="mt-auto pt-2">
                         <a
                           href="/contact"
                           className="inline-flex items-center text-sm font-medium text-primary hover:text-accent transition-colors"
@@ -244,21 +245,42 @@ export default function ProductsPage() {
                   </div>
 
                   {/* Expandable Specifications */}
-                  <details className="border-t border-border">
-                    <summary className="px-6 py-4 cursor-pointer hover:bg-secondary/50 transition-colors font-medium text-sm">
-                      View Specifications
-                    </summary>
-                    <div className="px-6 pb-6 bg-secondary/30">
-                      <ul className="space-y-2">
-                        {product.specifications.map((spec, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm">
-                            <CheckCircle size={16} className="mt-0.5 flex-shrink-0 text-primary" />
-                            <span className="text-muted">{spec}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </details>
+                  <div className="border-t border-border relative z-10">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setExpandedSpecs((prev) => ({ ...prev, [product.id]: !prev[product.id] }))
+                      }}
+                      className="w-full px-6 py-4 cursor-pointer hover:bg-secondary/50 transition-colors font-medium text-sm text-left flex items-center justify-between"
+                    >
+                      <span>View Specifications</span>
+                      <span className={`transform transition-transform duration-200 ${expandedSpecs[product.id] ? "rotate-180" : ""}`}>
+                        ▼
+                      </span>
+                    </button>
+                    {expandedSpecs[product.id] && (
+                      <>
+                        {/* Backdrop to close on outside click */}
+                        <div
+                          className="fixed inset-0 z-40"
+                          onClick={() => setExpandedSpecs((prev) => ({ ...prev, [product.id]: false }))}
+                        />
+                        {/* Specifications Panel */}
+                        <div className="absolute top-full left-0 right-0 bg-white border-t-2 border-primary shadow-xl z-50 mt-1 rounded-b-lg overflow-hidden">
+                          <div className="px-6 py-6 bg-secondary/30">
+                            <ul className="space-y-2">
+                              {product.specifications.map((spec, index) => (
+                                <li key={index} className="flex items-start gap-2 text-sm">
+                                  <CheckCircle size={16} className="mt-0.5 flex-shrink-0 text-primary" />
+                                  <span className="text-muted">{spec}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

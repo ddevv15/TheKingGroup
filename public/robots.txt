@@ -1,0 +1,11 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow debug/admin pages
+Disallow: /debug/
+Disallow: /api/
+
+# Sitemap location (update when sitemap is created)
+# Sitemap: https://thekinggroup.com/sitemap.xml
+

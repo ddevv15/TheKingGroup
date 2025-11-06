@@ -107,7 +107,7 @@ export default function HomePage() {
             playsInline
             className="absolute inset-0 w-full h-full object-cover z-0"
           >
-            <source src="/hero_bg.MP4" type="video/mp4" />
+            <source src="/hero_bg.mp4" type="video/mp4" />
           </video>
           <div className="relative z-20 container text-center text-white px-6">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-8 text-balance leading-tight">

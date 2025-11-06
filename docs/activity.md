@@ -588,3 +588,24 @@
   - File is now available on GitHub and can be used for hero background
   - `.gitattributes` file ensures all future `.mp4` files are tracked with Git LFS
   - Video file successfully pushed and available for use in production
+
+## 2025-01-27 (Fix Hero Video Case Mismatch & Git LFS Deployment)
+
+- Prompt: "the video is pushed on the repo, however it is not visible on the main site why is that? lets discuss it first and then come up with a solution" and "lets go with the option 1 for now, if that fixes it then everything should be good"
+
+- Actions:
+  - Fixed case mismatch in `app/page.jsx`: Changed video source from `/hero_bg.MP4` (uppercase) to `/hero_bg.mp4` (lowercase) to match actual filename
+  - Created `vercel.json` configuration file to ensure Git LFS files are pulled during Vercel deployment:
+    - Added `installCommand` that runs `git lfs install && git lfs pull && npm install` before build
+    - Ensures Git LFS is initialized and files are downloaded before npm install and build process
+  - Committed and pushed changes to GitHub
+
+- Issues Identified:
+  1. **Case Mismatch**: Code referenced `/hero_bg.MP4` but file is `hero_bg.mp4` (case-sensitive systems would fail)
+  2. **Git LFS Deployment**: Deployment platforms don't automatically pull Git LFS files - they only contain pointers, not actual files
+
+- Notes:
+  - Case mismatch fixed - video path now matches actual filename
+  - Vercel configuration ensures Git LFS files are pulled during build process
+  - Video should now be visible on deployed site after next deployment
+  - If issue persists, may need to verify Vercel has Git LFS installed in build environment or consider external hosting (Option 2)

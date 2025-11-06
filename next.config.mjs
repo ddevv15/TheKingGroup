@@ -8,7 +8,7 @@ const nextConfig = {
     ignoreBuildErrors: false, // Enable TypeScript checking during builds
   },
   images: {
-    unoptimized: false, // Enable Next.js image optimization for production
+    unoptimized: true, // Disable image optimization for static export (GitHub Pages)
     remotePatterns: [
       {
         protocol: "https",
@@ -16,46 +16,9 @@ const nextConfig = {
       },
     ],
   },
-  // Security headers
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "X-DNS-Prefetch-Control",
-            value: "on",
-          },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
-          },
-        ],
-      },
-    ]
-  },
-  // Production optimizations
-  compress: true,
+  output: 'export', // Enable static export for GitHub Pages
+  // Note: headers() and compress are not supported in static export
+  // Security headers should be configured at the hosting level (GitHub Pages)
   poweredByHeader: false, // Remove X-Powered-By header for security
   reactStrictMode: true,
 }

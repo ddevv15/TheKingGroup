@@ -16,6 +16,10 @@ const nextConfig = {
       },
     ],
   },
+  // Performance optimizations
+  experimental: {
+    optimizeCss: true,
+  },
   output: 'export', // Enable static export for GitHub Pages
   // Note: headers() and compress are not supported in static export
   // Security headers should be configured at the hosting level (GitHub Pages)

@@ -183,6 +183,51 @@
     font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
   }
 
+  /* GPU Acceleration Optimizations */
+  img,
+  video {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+  }
+
+  /* Optimize transitions to use GPU-accelerated properties only */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* GPU-accelerated hover effects */
+  button,
+  a {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Optimize cards and containers */
+  .group,
+  [class*="card"],
+  [class*="rounded"] {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Reduce repaints with contain */
+  section,
+  main {
+    contain: layout style;
+  }
+
+  /* Optimize grid layouts */
+  [class*="grid"] {
+    contain: layout;
+  }
+
   /* Enhanced typography and container styles */
   /* Force site-wide heading font override for section titles */
   h1,

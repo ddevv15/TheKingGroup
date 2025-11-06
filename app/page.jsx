@@ -1,6 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import { ArrowRight, Globe, Leaf, TrendingUp } from "lucide-react"
+import { ArrowRight, Globe, Leaf, ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function HomePage() {
   const products = [
@@ -58,7 +61,7 @@ export default function HomePage() {
       name: "Pulses",
       description: "FMCG and consumer goods for retail",
       image: "/pulses.jpg",
-    }
+    },
   ]
 
   const regions = [
@@ -94,18 +97,53 @@ export default function HomePage() {
     },
   ]
 
+  const [currentProductIndex, setCurrentProductIndex] = useState(0)
+  const [productsPerPage, setProductsPerPage] = useState(4)
+  const maxIndex = Math.max(0, Math.ceil(products.length / productsPerPage) - 1)
+
+  useEffect(() => {
+    const updateProductsPerPage = () => {
+      if (window.innerWidth < 768) {
+        setProductsPerPage(1) // Mobile: 1 product
+      } else if (window.innerWidth < 1024) {
+        setProductsPerPage(2) // Tablet: 2 products
+      } else {
+        setProductsPerPage(4) // Desktop: 4 products
+      }
+    }
+
+    updateProductsPerPage()
+    window.addEventListener("resize", updateProductsPerPage)
+    return () => window.removeEventListener("resize", updateProductsPerPage)
+  }, [])
+
+  const visibleProducts = products.slice(
+    currentProductIndex * productsPerPage,
+    currentProductIndex * productsPerPage + productsPerPage,
+  )
+
+  const handlePrevious = () => {
+    setCurrentProductIndex((prev) => Math.max(0, prev - 1))
+  }
+
+  const handleNext = () => {
+    setCurrentProductIndex((prev) => Math.min(maxIndex, prev + 1))
+  }
+
   return (
     <>
       <Header />
       <main className="pt-28">
         {/* Hero Section */}
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            preload="auto"
             className="absolute inset-0 w-full h-full object-cover z-0"
+            style={{ transform: 'translateZ(0)', willChange: 'auto' }}
           >
             <source src="/hero_bg.mp4" type="video/mp4" />
           </video>
@@ -119,7 +157,14 @@ export default function HomePage() {
             </p>
             <a
               href="/products"
-              className="inline-block px-10 py-5 bg-accent text-accent-foreground text-lg font-semibold rounded-lg hover:bg-accent/90 hover:scale-105 transition-all duration-200 shadow-xl focus:ring-4 focus:ring-accent/50"
+              className="inline-block px-10 py-5 bg-accent text-accent-foreground text-lg font-semibold rounded-lg shadow-xl focus:ring-4 focus:ring-accent/50 will-change-transform transition-transform duration-200"
+              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateZ(0) scale(1.05)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateZ(0) scale(1)'
+              }}
             >
               Explore Our Products
             </a>
@@ -134,13 +179,13 @@ export default function HomePage() {
             </h2>
             <p className="text-xl text-muted leading-relaxed">
               The King Group stands as a trusted partner in global agri-export, delivering premium products sourced from
-              the finest regions of India, Vietnam, and West Africa. With decades of expertise and an unwavering commitment
-              to quality, we serve distributors, manufacturers, and retailers across four continents.
+              the finest regions of India, Vietnam, and West Africa. With decades of expertise and an unwavering
+              commitment to quality, we serve distributors, manufacturers, and retailers across four continents.
             </p>
           </div>
         </section>
 
-        {/* Products Grid */}
+        {/* Products Carousel */}
         <section className="py-24 bg-secondary">
           <div className="container px-6">
             <div className="text-center mb-16">
@@ -149,32 +194,115 @@ export default function HomePage() {
                 A diverse portfolio of premium agricultural and consumer products
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {products.map((product) => (
-                <div
-                  key={product.name}
-                  className="group bg-card rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-border"
-                >
-                  <div className="relative h-56 overflow-hidden">
-                    <img
-                      src={product.image || "/placeholder.svg"}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-2xl font-serif font-bold mb-3 text-foreground">{product.name}</h3>
-                    <p className="text-base text-muted mb-5 leading-relaxed">{product.description}</p>
-                    <a
-                      href="/products"
-                      className="inline-flex items-center text-base font-semibold text-primary hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-2 py-1"
+            <div className="relative px-4 sm:px-8 md:px-16 lg:px-20">
+              {/* Navigation Buttons */}
+              <button
+                onClick={handlePrevious}
+                disabled={currentProductIndex === 0}
+                className={`absolute left-0 sm:left-2 md:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 will-change-transform ${
+                  currentProductIndex === 0
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:scale-110"
+                }`}
+                style={{ transform: 'translate3d(0, -50%, 0)', backfaceVisibility: 'hidden' }}
+                aria-label="Previous products"
+              >
+                <ChevronLeft
+                  size={20}
+                  className={`sm:w-6 sm:h-6 md:w-7 md:h-7 transition-colors duration-200 ${currentProductIndex === 0 ? "text-muted" : "text-primary"}`}
+                />
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={currentProductIndex >= maxIndex}
+                className={`absolute right-0 sm:right-2 md:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 will-change-transform ${
+                  currentProductIndex >= maxIndex
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:scale-110"
+                }`}
+                style={{ transform: 'translate3d(0, -50%, 0)', backfaceVisibility: 'hidden' }}
+                aria-label="Next products"
+              >
+                <ChevronRight
+                  size={20}
+                  className={`sm:w-6 sm:h-6 md:w-7 md:h-7 transition-colors duration-200 ${currentProductIndex >= maxIndex ? "text-muted" : "text-primary"}`}
+                />
+              </button>
+
+              {/* Products Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 px-6 sm:px-8 md:px-4 lg:px-6">
+                {visibleProducts.map((product) => (
+                  <div
+                    key={product.name}
+                    className="group bg-card rounded-xl overflow-hidden shadow-lg border border-border will-change-transform hover:-translate-y-2 hover:shadow-2xl transition-transform duration-300"
+                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateZ(0) translateY(-8px)'
+                      e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateZ(0) translateY(0)'
+                      e.currentTarget.style.boxShadow = ''
+                    }}
+                  >
+                    <div 
+                      className="relative h-56 overflow-hidden"
+                      style={{ contain: 'layout style paint' }}
                     >
-                      Learn More
-                      <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </a>
+                      <img
+                        src={product.image || "/placeholder.svg"}
+                        alt={product.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover transition-transform duration-500 ease-out will-change-transform"
+                        style={{ transform: 'translateZ(0) scale(1)', backfaceVisibility: 'hidden' }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateZ(0) scale(1.1)'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateZ(0) scale(1)'
+                        }}
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-2xl font-serif font-bold mb-3 text-foreground">{product.name}</h3>
+                      <p className="text-base text-muted mb-5 leading-relaxed">{product.description}</p>
+                      <a
+                        href="/products"
+                        className="inline-flex items-center text-base font-semibold text-primary hover:text-accent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent rounded px-2 py-1"
+                      >
+                        Learn More
+                        <ArrowRight 
+                          size={18} 
+                          className="ml-2 transition-transform duration-200 will-change-transform"
+                          style={{ transform: 'translateZ(0) translateX(0)' }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateZ(0) translateX(4px)'
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateZ(0) translateX(0)'
+                          }}
+                        />
+                      </a>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* Carousel Indicators */}
+              <div className="flex justify-center gap-2 mt-8">
+                {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentProductIndex(index)}
+                    className={`h-2 rounded-full transition-all duration-200 will-change-transform ${
+                      index === currentProductIndex ? "bg-primary w-8" : "bg-muted w-2 hover:bg-primary/50"
+                    }`}
+                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -184,7 +312,10 @@ export default function HomePage() {
           <img
             src="/white_tiles.jpg"
             alt="White tiles background"
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover z-0"
+            style={{ transform: 'translateZ(0)', willChange: 'auto', backfaceVisibility: 'hidden' }}
           />
           <div className="relative z-10 container px-6">
             {/* Global Reach Section */}
@@ -199,16 +330,26 @@ export default function HomePage() {
                 {regions.slice(0, 4).map((region) => (
                   <div
                     key={region.name}
-                    className="text-center p-10 bg-secondary rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-border"
+                    className="text-center p-10 bg-secondary rounded-xl shadow-md border border-border will-change-transform transition-shadow duration-300"
+                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow = ''
+                    }}
                   >
                     {region.image ? (
                       <img
-                        src={region.image}
+                        src={region.image || "/placeholder.svg"}
                         alt={region.name}
+                        loading="lazy"
+                        decoding="async"
                         className="mx-auto mb-6 w-20 h-20 object-contain"
+                        style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                       />
                     ) : (
-                      <Globe size={56} className="mx-auto mb-6 text-primary" />
+                      <Globe size={56} className="mx-auto mb-6 text-primary" style={{ transform: 'translateZ(0)' }} />
                     )}
                     <h3 className="text-2xl font-serif font-bold mb-3 text-foreground">{region.name}</h3>
                     <p className="text-lg text-muted font-medium">{region.countries}</p>
@@ -218,7 +359,14 @@ export default function HomePage() {
               <div className="text-center">
                 <a
                   href="/global-presence"
-                  className="inline-flex items-center px-8 py-4 bg-primary text-primary-foreground font-semibold text-lg rounded-lg hover:bg-primary/90 hover:scale-105 transition-all duration-200 shadow-lg focus:ring-4 focus:ring-primary/50"
+                  className="inline-flex items-center px-8 py-4 bg-primary text-primary-foreground font-semibold text-lg rounded-lg shadow-lg focus:ring-4 focus:ring-primary/50 will-change-transform transition-transform duration-200"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateZ(0) scale(1.05)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateZ(0) scale(1)'
+                  }}
                 >
                   View Full Map
                   <ArrowRight size={20} className="ml-3" />
@@ -238,16 +386,22 @@ export default function HomePage() {
                 {values.map((value) => {
                   const Icon = value.icon
                   return (
-                    <div key={value.title} className="text-center">
-                      <div className="inline-flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 shadow-lg">
+                    <div key={value.title} className="text-center" style={{ contain: 'layout style' }}>
+                      <div 
+                        className="inline-flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 shadow-lg"
+                        style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                      >
                         {value.image ? (
                           <img
-                            src={value.image}
+                            src={value.image || "/placeholder.svg"}
                             alt={value.title}
+                            loading="lazy"
+                            decoding="async"
                             className="w-10 h-10 object-contain"
+                            style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                           />
                         ) : (
-                          <Icon size={36} className="text-accent-foreground" />
+                          <Icon size={36} className="text-accent-foreground" style={{ transform: 'translateZ(0)' }} />
                         )}
                       </div>
                       <h3 className="text-2xl font-serif font-bold mb-4 text-foreground">{value.title}</h3>
@@ -265,24 +419,43 @@ export default function HomePage() {
           <img
             src="/tiles_background.jpg"
             alt="Tiles background"
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover z-0"
+            style={{ transform: 'translateZ(0)', willChange: 'auto', backfaceVisibility: 'hidden' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 z-10" style={{ transform: 'translateZ(0)' }} />
           <div className="relative z-20 container max-w-4xl text-center px-6">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-8 text-balance text-white">Ready to Partner With Us?</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-8 text-balance text-white">
+              Ready to Partner With Us?
+            </h2>
             <p className="text-xl text-white/95 mb-10 leading-relaxed max-w-2xl mx-auto">
               Join hundreds of satisfied clients worldwide who trust The King Group for their sourcing needs
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a
                 href="/contact"
-                className="px-10 py-5 bg-accent text-accent-foreground text-lg font-semibold rounded-lg hover:bg-accent/90 hover:scale-105 transition-all duration-200 shadow-lg focus:ring-4 focus:ring-accent/50"
+                className="px-10 py-5 bg-accent text-accent-foreground text-lg font-semibold rounded-lg shadow-lg focus:ring-4 focus:ring-accent/50 will-change-transform transition-transform duration-200"
+                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateZ(0) scale(1.05)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateZ(0) scale(1)'
+                }}
               >
                 Contact Us
               </a>
               <a
                 href="/products"
-                className="px-10 py-5 bg-white text-foreground text-lg font-semibold rounded-lg border-2 border-white hover:bg-white/90 hover:scale-105 transition-all duration-200 shadow-md focus:ring-4 focus:ring-white/50"
+                className="px-10 py-5 bg-white text-foreground text-lg font-semibold rounded-lg border-2 border-white shadow-md focus:ring-4 focus:ring-white/50 will-change-transform transition-transform duration-200"
+                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateZ(0) scale(1.05)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateZ(0) scale(1)'
+                }}
               >
                 View Products
               </a>

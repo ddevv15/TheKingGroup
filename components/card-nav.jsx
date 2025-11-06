@@ -63,8 +63,14 @@ const CardNav = ({
     const navEl = navRef.current
     if (!navEl) return null
 
-    gsap.set(navEl, { height: 60, overflow: "hidden" })
-    gsap.set(cardsRef.current, { y: 50, opacity: 0 })
+    // GPU-accelerated initial states
+    gsap.set(navEl, { height: 60, overflow: "hidden", force3D: true })
+    gsap.set(cardsRef.current, { 
+      y: 50, 
+      opacity: 0,
+      force3D: true,
+      transformOrigin: "center center"
+    })
 
     const tl = gsap.timeline({ paused: true })
 
@@ -72,9 +78,17 @@ const CardNav = ({
       height: calculateHeight,
       duration: 0.4,
       ease,
+      force3D: true,
     })
 
-    tl.to(cardsRef.current, { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 }, "-=0.1")
+    tl.to(cardsRef.current, { 
+      y: 0, 
+      opacity: 1, 
+      duration: 0.4, 
+      ease, 
+      stagger: 0.08,
+      force3D: true,
+    }, "-=0.1")
 
     return tl
   }

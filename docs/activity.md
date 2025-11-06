@@ -636,3 +636,37 @@
   - Static export configuration ensures all assets are properly included in build output
   - After next deployment, all static assets (images, fonts, video) should load correctly
   - If issues persist, may need to check GitHub Pages repository settings or consider external CDN hosting
+
+## 2025-01-27 (Verify and Enhance Git LFS Configuration)
+
+- Prompt: "Check your LFS configuration. Make sure .lfsconfig and .gitattributes have proper settings and a valid remote URL. Re-push your large files with git lfs track and commit them again."
+
+- Actions:
+  - Verified Git LFS configuration:
+    - `.gitattributes` correctly configured: `*.mp4 filter=lfs diff=lfs merge=lfs -text`
+    - LFS endpoint verified: `https://github.com/ddevv15/TheKingGroup.git/info/lfs`
+    - File properly tracked: `public/hero_bg.mp4` (174MB) stored in LFS
+    - LFS pointer file confirmed in repository (file is correctly stored, not committed directly)
+  - Created `.lfsconfig` file with explicit LFS endpoint configuration:
+    - Added explicit URL configuration for LFS endpoint
+    - Provides clear configuration for build environments
+  - Verified GitHub Actions workflow:
+    - Checkout step has `lfs: true` to pull LFS files during build
+    - Properly configured for GitHub Pages deployment
+  - Verified Vercel configuration (if switching platforms):
+    - `vercel.json` includes `git lfs install && git lfs pull` in installCommand
+    - Ready for Vercel deployment if needed
+
+- Configuration Summary:
+  - **`.gitattributes`**: Tracks all `*.mp4` files with LFS
+  - **`.lfsconfig`**: Explicit LFS endpoint configuration (optional but recommended)
+  - **GitHub Actions**: Pulls LFS files with `lfs: true` in checkout
+  - **Vercel**: Configured with LFS pull command in installCommand
+  - **File Status**: `hero_bg.mp4` (174MB) properly stored in LFS, cannot be committed directly (exceeds GitHub's 100MB limit)
+
+- Notes:
+  - Git LFS configuration is now complete and verified
+  - File is properly tracked and stored in LFS (not committed directly)
+  - Both GitHub Pages and Vercel configurations are ready
+  - Video file must use LFS due to size (174MB > 100MB GitHub limit)
+  - Alternative: Consider external hosting (Cloudinary, Vercel Blob) for better performance if LFS causes issues

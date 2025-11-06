@@ -336,3 +336,215 @@
   - Code quality improved with proper validation, error handling, and documentation
   - Debug pages properly secured for production deployment
   - All dependencies pinned to specific versions for reproducible builds
+
+## 2025-01-27 (Fix Read More Button for Leadership Cards)
+
+- Prompt: "@page.jsx (33-40) this card does not have the option for read more button for the description/bio fix that"
+
+- Actions:
+  - Fixed read more button visibility threshold in `app/leadership/page.jsx`
+  - Lowered threshold from `member.bio.length > 150` to `member.bio.length > 100` characters
+  - Ensures "Read more" button appears for Yashrajsinh Zala card and other leadership cards with longer bios
+
+- Notes:
+  - Read more functionality already existed but threshold was too high
+  - Now shows read more button for bios over 100 characters (previously 150)
+  - All leadership cards with longer bios now properly display read more/show less toggle
+
+## 2025-01-27 (Comprehensive Project Content Guide & Dummy Content Inventory)
+
+- Prompt: "scan the entire codebase, and create a document about what this project is about, so I can train my ai assistant according to that data and outputs the best content for me to change, and remove the dummy content"
+
+- Actions:
+  - Scanned entire codebase including all page files, components, and configuration files
+  - Analyzed content across 8 main pages (Homepage, About, Leadership, Products, Global Presence, Contact, Sustainability, Footer)
+  - Identified all dummy/placeholder content vs real verified content
+  - Created comprehensive project content guide at `docs/project-content-guide.md`
+  - Document includes:
+    - Complete project overview and business context
+    - Technology stack summary
+    - Detailed content inventory (real vs dummy)
+    - Page-by-page dummy content identification
+    - Content replacement guidelines with priority levels
+    - File structure and content locations
+    - AI assistant training guidelines with example prompts
+    - Quick reference summary of dummy content
+
+- Key Findings:
+  - **Real Content Verified:**
+    - Company name: "The King Group" ✅
+    - Headquarters address (Gujarat, India) ✅
+    - Phone: +91 909 904 9384 ✅
+    - Emails: info@thekinggroup.in, cmo@thekinggroup.in ✅
+    - Vicky Patel (Chairman) - LinkedIn ✅
+    - Yashrajsinh Zala (CMO) - LinkedIn & Photo ✅
+  
+  - **Dummy Content Identified:**
+    - Company history and founding year (inconsistent: shows both 1995 and 2008)
+    - Most leadership team members (except 2 verified)
+    - All product descriptions, specifications, varieties
+    - Most office locations and contact details
+    - All sustainability initiatives and statistics
+    - Certifications list (needs verification)
+    - Mission/vision statements
+    - Timeline/milestones
+    - Most product images (stock photos)
+    - FAQ content
+    - Social media links (placeholders)
+
+- Notes:
+  - Document serves as training guide for AI assistant to identify and replace dummy content
+  - Includes priority levels (Critical, High, Medium) for content replacement
+  - Provides content verification checklist
+  - Includes example prompts for AI assistant training
+  - Document is living document - should be updated as content is replaced
+  - All pages analyzed and dummy content catalogued systematically
+
+## 2025-01-27 (Fix Hydration Errors)
+
+- Prompt: "there are a lot of hydrations errors fix that"
+
+- Actions:
+  - Fixed hydration errors across multiple components by adding proper SSR guards
+  - Updated `components/card-nav.jsx`:
+    - Added `typeof window !== "undefined"` check before `window.matchMedia` call
+    - Added `typeof document !== "undefined"` check before `document.activeElement` access
+    - Added SSR guard in `useLayoutEffect` for window resize listener
+  - Fixed `hooks/use-mobile.ts` and `components/ui/use-mobile.tsx`:
+    - Changed initial state from `undefined` to `false` to match SSR
+    - Added `hasMounted` state to track client-side hydration
+    - Return `false` during SSR to prevent hydration mismatch
+    - Only return actual mobile state after component has mounted on client
+  - Fixed `components/ui/sidebar.tsx`:
+    - Added `typeof document !== "undefined"` check before `document.cookie` access
+    - Added `typeof window !== "undefined"` check in `useEffect` for keyboard event listener
+  - Fixed `components/error-boundary.jsx`:
+    - Added `typeof window !== "undefined"` check before `window.location.href` assignment
+
+- Root Causes Fixed:
+  1. **Browser API calls without SSR guards** - Components were calling `window`, `document` APIs during SSR
+  2. **State initialization mismatches** - `use-mobile` hooks started with `undefined` causing server/client mismatch
+  3. **Event listeners in useEffect** - Window event listeners were being set up without checking if window exists
+
+- Additional Fix:
+  - Added `suppressHydrationWarning` to `<body>` tag in `app/layout.jsx` to prevent hydration errors from browser extensions (like Grammarly) that inject attributes (`data-new-gr-c-s-check-loaded`, `data-gr-ext-installed`) into the body element
+
+- Notes:
+  - All browser API calls now properly guarded with `typeof window !== "undefined"` or `typeof document !== "undefined"`
+  - Mobile detection hooks now return consistent values during SSR (false) and update on client mount
+  - Body tag suppresses hydration warnings for browser extension attributes (common with Grammarly, password managers, etc.)
+  - Hydration errors should be resolved - server and client now render identical initial HTML
+  - Components maintain functionality while being SSR-safe
+
+## 2025-01-27 (Update Product Catalog and Countries Based on Homepage Changes)
+
+- Prompt: "I have updated some content in the website's home page, check it and update the product catalogue accordingly, as well as the countries."
+
+- Actions:
+  - Added 3 missing products to products catalog (`app/products/page.jsx`):
+    - **Edible Oil** - Category: FMCG, with varieties (Sunflower Oil, Soybean Oil, Palm Oil, etc.), destinations: West Africa, Middle East, SouthEast Asia, South Asia
+    - **Castor Oil** - Category: FMCG, with varieties (Refined, Cold Pressed, Pharmaceutical Grade, etc.), destinations: Europe, Middle East, SouthEast Asia, South Asia
+    - **Pulses** - Category: Grains, with varieties (Red Lentils, Yellow Lentils, Chickpeas, etc.), destinations: West Africa, Middle East, Europe, SouthEast Asia, South Asia
+  - Updated global presence page (`app/global-presence/page.jsx`):
+    - Changed "Africa" region to "West Africa" with updated country list (15 West African countries)
+    - Removed "Americas" and "Oceania" regions
+    - Added "SouthEast Asia" region with 6 countries (Singapore, Malaysia, Indonesia, Thailand, Vietnam, Philippines)
+    - Added "South Asia" region with 6 countries (Bangladesh, Sri Lanka, Nepal, Bhutan, Maldives, Afghanistan)
+    - Updated region statistics for new regions
+  - Updated product destinations throughout products catalog to match new regional structure:
+    - Replaced "Africa" with "West Africa" in product destinations
+    - Replaced "Americas" with "SouthEast Asia" or "South Asia" where appropriate
+    - Updated all 11 products to use consistent regional naming
+  - Updated footer (`components/footer.jsx`):
+    - Changed export regions from ["Africa", "Middle East", "Europe", "Americas", "Asia Pacific"] to ["West Africa", "Middle East", "Europe", "SouthEast Asia", "South Asia"]
+
+- Notes:
+  - Product catalog now matches homepage with all 11 products (Rice, Cashew, Cotton, Oilseeds, Spices, Tiles, Pharma, Supermarket Products, Edible Oil, Castor Oil, Pulses)
+  - Regional structure now consistent across homepage, products page, and global presence page
+  - All product destinations updated to use new regional names (West Africa, SouthEast Asia, South Asia)
+  - Footer export regions updated to match homepage structure
+
+## 2025-01-27 (Update Global Reach Section - Show Only 4 Cards)
+
+- Prompt: "add a show more button to global reach section on home page, after showing four cards" (later reverted)
+
+- Initial Actions (Reverted):
+  - Converted homepage to client component with "use client" directive
+  - Added "Show More" button functionality
+  - Later reverted per user request
+
+- Final Actions:
+  - Modified global reach section to display only first 4 region cards (`regions.slice(0, 4)`)
+  - Removed "Show More" button (user determined it was unnecessary since "View Full Map" button already exists)
+  - Kept homepage as server component (no "use client" needed)
+  - Maintained existing "View Full Map" button
+
+- Notes:
+  - Homepage now shows only 4 region cards: West Africa, Middle East, Europe, SouthEast Asia
+  - 5th region (South Asia) is hidden but accessible via "View Full Map" button
+  - Simpler implementation without unnecessary interactive elements
+  - Page remains a server component for better performance
+
+## 2025-01-27 (Add Background Image to CTA Section)
+
+- Prompt: "use @tiles_background.jpg as the Background for ready to partner us seciton on the home page"
+
+- Actions:
+  - Updated "Ready to Partner With Us" CTA section (`app/page.jsx`) to use background image
+  - Added `tiles_background.jpg` as background image with absolute positioning
+  - Added gradient overlay (`from-primary/90 to-primary/70`) for text readability
+  - Updated text colors to white for contrast against background
+  - Updated button styles:
+    - "Contact Us" button uses accent color (gold) for visibility
+    - "View Products" button uses white background with white border
+  - Maintained responsive design and hover effects
+
+- Notes:
+  - Background image displays behind gradient overlay for visual depth
+  - Text remains readable with white color and gradient overlay
+  - Buttons styled for visibility against background image
+  - Layout structure: background image (z-0) → gradient overlay (z-10) → content (z-20)
+
+## 2025-01-27 (Add Video Background to Hero Section)
+
+- Prompt: "use @hero_bg.mp4 for the background of hero section on the homepage"
+
+- Actions:
+  - Updated hero section (`app/page.jsx`) to use video background instead of static image
+  - Replaced `<img>` tag with `<video>` element
+  - Added video attributes:
+    - `autoPlay` - starts playing automatically
+    - `loop` - loops continuously
+    - `muted` - muted for autoplay compatibility (required by browsers)
+    - `playsInline` - plays inline on mobile devices
+  - Video positioned absolutely with `object-cover` for full coverage
+  - Maintained gradient overlay and text content structure
+  - Video file: `/hero_bg.MP4` (from public folder)
+
+- Notes:
+  - Video background provides dynamic, engaging hero section
+  - Muted autoplay ensures browser compatibility (browsers block autoplay with sound)
+  - Gradient overlay maintains text readability over video
+  - Layout structure: video (z-0) → gradient overlay (z-10) → content (z-20)
+  - Video loops seamlessly for continuous background effect
+
+## 2025-01-27 (Combine Global Reach & Why Choose Sections with White Tiles Background)
+
+- Prompt: "use @white_tiles.jpg for the background section of global reach and why choose king group make a single container for those two sections and use the @white_tiles.jpg for the whole background"
+
+- Actions:
+  - Combined "Global Reach" and "Why Choose The King Group" sections into single container (`app/page.jsx`)
+  - Added `white_tiles.jpg` as background image for the combined section
+  - Background image positioned absolutely behind content
+  - Updated text colors in "Why Choose The King Group" section:
+    - Changed headings from `text-white` to `text-foreground` (for readability on white background)
+    - Changed descriptions from `text-white/85` to `text-muted` (for readability on white background)
+  - Maintained spacing between sections with `mb-24` margin
+  - Both sections now share the same white tiles background
+
+- Notes:
+  - Single unified section with elegant white tiles background
+  - Both "Global Reach" and "Why Choose The King Group" content displayed within same container
+  - Text colors adjusted for optimal readability on white background
+  - Layout structure: background image (z-0) → content (z-10)
+  - Clean, cohesive design with consistent background throughout both sections

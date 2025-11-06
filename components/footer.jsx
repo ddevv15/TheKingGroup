@@ -22,7 +22,7 @@ export default function Footer() {
     { name: "Contact", href: "/contact" },
   ]
 
-  const regions = ["Africa", "Middle East", "Europe", "Americas", "Asia Pacific"]
+  const regions = ["West Africa", "Middle East", "Europe", "SouthEast Asia", "South Asia"]
 
   return (
     <footer className="bg-primary text-primary-foreground">
@@ -100,7 +100,14 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="mt-1 flex-shrink-0" />
-                <span className="text-sm text-primary-foreground/80">123 Export Plaza, Mumbai, India</span>
+                <span className="text-sm text-primary-foreground/80">8, The King House,
+                  <br />
+                  Surmay Banglows,
+                  <br />
+                  Vijapur, Gujarat, India.
+                  <br />
+                  Pin code-382870
+                </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="flex-shrink-0" />
@@ -108,7 +115,7 @@ export default function Footer() {
                   href="tel:+911234567890"
                   className="text-sm text-primary-foreground/80 hover:text-accent transition-colors"
                 >
-                  +91 123 456 7890
+                  +91 909 904 9384
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -117,7 +124,7 @@ export default function Footer() {
                   href="mailto:info@thekinggroup.com"
                   className="text-sm text-primary-foreground/80 hover:text-accent transition-colors"
                 >
-                  info@thekinggroup.com
+                  info@thekinggroup.in
                 </a>
               </li>
             </ul>

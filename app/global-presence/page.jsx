@@ -5,23 +5,23 @@ import { Globe, MapPin, Phone, Mail, Clock } from "lucide-react"
 export default function GlobalPresencePage() {
   const regions = [
     {
-      name: "Africa",
+      name: "West Africa",
       countries: [
         "Nigeria",
-        "Kenya",
-        "South Africa",
         "Ghana",
-        "Tanzania",
-        "Uganda",
-        "Ethiopia",
-        "Mozambique",
         "Senegal",
         "Ivory Coast",
         "Cameroon",
-        "Angola",
-        "Zimbabwe",
-        "Zambia",
-        "Rwanda",
+        "Mali",
+        "Burkina Faso",
+        "Niger",
+        "Benin",
+        "Togo",
+        "Guinea",
+        "Sierra Leone",
+        "Liberia",
+        "Gambia",
+        "Mauritania",
       ],
       description:
         "Our largest export market, serving diverse needs from staple foods to building materials across 15+ countries.",
@@ -55,20 +55,28 @@ export default function GlobalPresencePage() {
       stats: { partners: "45+", volume: "15%", growth: "+12%" },
     },
     {
-      name: "Americas",
-      countries: ["USA", "Canada", "Brazil", "Mexico", "Argentina", "Chile"],
-      description: "Growing market for authentic Indian spices, specialty rice varieties, and nutraceuticals.",
-      stats: { partners: "30+", volume: "10%", growth: "+25%" },
+      name: "SouthEast Asia",
+      countries: ["Singapore", "Malaysia", "Indonesia", "Thailand", "Vietnam", "Philippines"],
+      description:
+        "Strategic regional market with focus on rice, spices, and processed food products for growing economies.",
+      stats: { partners: "40+", volume: "8%", growth: "+20%" },
+    },
+    {
+      name: "South Asia",
+      countries: ["Bangladesh", "Sri Lanka", "Nepal", "Bhutan", "Maldives", "Afghanistan"],
+      description:
+        "Regional trade partnerships focusing on rice, pulses, spices, and essential commodities.",
+      stats: { partners: "35+", volume: "7%", growth: "+15%" },
     },
   ]
 
   const offices = [
     {
       name: "Headquarters",
-      location: "Mumbai, India",
-      address: "123 Export Plaza, Andheri East, Mumbai 400069, India",
-      phone: "+91 22 1234 5678",
-      email: "india@thekinggroup.com",
+      location: "Gujarat, India",
+      address: "8, The King House, Surmay Banglows, Vijapur, Dist-Mehsana, Gujarat, India. Pin code-382870",
+      phone: "+91 909 904 9384",
+      email: "info@thekinggroup.in",
       hours: "Mon - Fri: 9:00 AM - 6:00 PM IST, Sat: 9:00 AM - 1:00 PM IST",
       type: "Headquarters",
       description:
@@ -85,14 +93,14 @@ export default function GlobalPresencePage() {
       description: "Regional hub for Southeast Asian operations, specializing in rice and cashew procurement.",
     },
     {
-      name: "Thailand Office",
-      location: "Bangkok, Thailand",
-      address: "789 Sukhumvit Road, Khlong Toei, Bangkok 10110, Thailand",
-      phone: "+66 2 123 4567",
-      email: "thailand@thekinggroup.com",
-      hours: "Mon - Fri: 8:30 AM - 5:30 PM ICT",
+      name: "Australia Office",
+      location: "Australia",
+      address: "8, The King House, Surmay Banglows, Vijapur, Dist-Mehsana, Gujarat, India. Pin code-382870",
+      phone: "+91 909 904 9384",
+      email: "info@thekinggroup.in",
+      hours: "Mon - Fri: 9:00 AM - 6:00 PM IST, Sat: 9:00 AM - 1:00 PM IST",
       type: "Regional Office",
-      description: "Strategic location for logistics coordination and quality control in Southeast Asia.",
+      description: "Strategic location for logistics coordination and quality control in Australia.",
     },
     {
       name: "UAE Office",
@@ -105,24 +113,24 @@ export default function GlobalPresencePage() {
       description: "Gateway to Middle East and African markets, handling distribution and client relations.",
     },
     {
-      name: "Nigeria Office",
-      location: "Lagos, Nigeria",
-      address: "Victoria Island, Lagos, Nigeria",
-      phone: "+234 1 234 5678",
-      email: "nigeria@thekinggroup.com",
-      hours: "Mon - Fri: 8:00 AM - 5:00 PM WAT",
-      type: "Representative Office",
-      description: "Supporting our largest African market with local presence and customer service.",
+      name: "Ghana Office",
+      location: "Ghana",
+      address: "8, The King House, Surmay Banglows, Vijapur, Dist-Mehsana, Gujarat, India. Pin code-382870",
+      phone: "+91 909 904 9384",
+      email: "info@thekinggroup.in",
+      hours: "Mon - Fri: 9:00 AM - 6:00 PM IST, Sat: 9:00 AM - 1:00 PM IST",
+      type: "Regional Office",
+      description: "Strategic location for logistics coordination and quality control in Ghana.",
     },
     {
-      name: "Kenya Office",
-      location: "Nairobi, Kenya",
-      address: "Westlands, Nairobi, Kenya",
-      phone: "+254 20 123 4567",
-      email: "kenya@thekinggroup.com",
-      hours: "Mon - Fri: 8:00 AM - 5:00 PM EAT",
-      type: "Representative Office",
-      description: "East African hub for distribution and market development.",
+      name: "Tanzania Office",
+      location: "Tanzania",
+      address: "8, The King House, Surmay Banglows, Vijapur, Dist-Mehsana, Gujarat, India. Pin code-382870",
+      phone: "+91 909 904 9384",
+      email: "info@thekinggroup.in",
+      hours: "Mon - Fri: 9:00 AM - 6:00 PM IST, Sat: 9:00 AM - 1:00 PM IST",
+      type: "Regional Office",
+      description: "Strategic location for logistics coordination and quality control in Tanzania.",
     },
   ]
 
@@ -138,7 +146,7 @@ export default function GlobalPresencePage() {
           <div className="relative container text-center">
             <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-balance">Global Presence</h1>
             <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto text-balance leading-relaxed">
-              Connecting 40+ countries across four continents with quality products and reliable service
+              Connecting 40+ countries across six continents with quality products, reliable logistics and long term sustainable partnerships
             </p>
           </div>
         </section>

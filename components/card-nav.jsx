@@ -27,6 +27,7 @@ const CardNav = ({
     const navEl = navRef.current
     if (!navEl) return 260
 
+    if (typeof window === "undefined") return 260
     const isMobile = window.matchMedia("(max-width: 768px)").matches
     if (isMobile) {
       const contentEl = navEl.querySelector(".card-nav-content")
@@ -90,6 +91,8 @@ const CardNav = ({
   }, [ease, items])
 
   useLayoutEffect(() => {
+    if (typeof window === "undefined") return
+
     const handleResize = () => {
       if (!tlRef.current) return
 
@@ -176,11 +179,13 @@ const CardNav = ({
             className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded-md"
             onClick={(e) => {
               // Remove focus after click to prevent focus ring from persisting
-              setTimeout(() => {
-                if (document.activeElement === e.currentTarget) {
-                  e.currentTarget.blur()
-                }
-              }, 0)
+              if (typeof document !== "undefined") {
+                setTimeout(() => {
+                  if (document.activeElement === e.currentTarget) {
+                    e.currentTarget.blur()
+                  }
+                }, 0)
+              }
             }}
           >
             {logo ? (

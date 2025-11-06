@@ -7,12 +7,12 @@ import Header from "@/components/header"
 export default function LeadershipPage() {
   const boardMembers = [
     {
-      name: "Rajesh Kumar",
+      name: "Vicky Patel",
       title: "Chairman & Founder",
       image: "/professional-indian-businessman-chairman.jpg",
-      bio: "Founded The King Group in 1995 with a vision to connect global markets with quality agricultural products. Under his leadership, the company has grown from a regional trader to a global agri-export powerhouse.",
-      linkedin: "#",
-      email: "rajesh.kumar@thekinggroup.com",
+      bio: "Founded The King Group in 2008 with a vision to connect global markets with quality agricultural products. Under his leadership, the company has grown from a regional trader to a global agri-export powerhouse.",
+      linkedin: "https://www.linkedin.com/in/vicky-patel-8999506b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+      email: "info@thekinggroup.in",
     },
     {
       name: "Priya Sharma",
@@ -31,12 +31,12 @@ export default function LeadershipPage() {
       email: "michael.chen@thekinggroup.com",
     },
     {
-      name: "Sarah Williams",
-      title: "Independent Director",
-      image: "/professional-businesswoman-board-director.jpg",
-      bio: "Renowned expert in sustainable agriculture and food security. Serves on multiple boards and advises governments on agricultural policy and trade.",
-      linkedin: "#",
-      email: "sarah.williams@thekinggroup.com",
+      name: "Yashrajsinh Zala",
+      title: "Chief Marketing Officer",
+      image: "/yashraj.jpeg",
+      bio: "Multi-disciplinary entrepreneur passionate about global commerce, market strategy, and value creation. Leading growth in import-export while fostering strong international partnerships.",
+      linkedin: "https://www.linkedin.com/in/yashrajsinh-zala-83469831a/",
+      email: "cmo@thekinggroup.in",
     },
   ]
 
@@ -127,7 +127,7 @@ export default function LeadershipPage() {
       </section>
 
       {/* Executive Leadership */}
-      <section className="py-20 bg-muted/30">
+      {/* <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -144,7 +144,7 @@ export default function LeadershipPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values Section */}
       <section className="py-20 bg-background">
@@ -203,7 +203,7 @@ function LeaderCard({ member }) {
         >
           {member.bio}
         </p>
-        {member.bio.length > 150 && (
+        {member.bio.length > 100 && (
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-sm text-primary font-semibold hover:text-primary/80 transition-colors mb-4"

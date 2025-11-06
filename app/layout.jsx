@@ -68,7 +68,7 @@ export default function RootLayout({ children }) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="theme-color" content="#1e3a5f" />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <ClientErrorBoundary>
           {children}
           <FeedbackButton />

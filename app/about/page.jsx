@@ -4,11 +4,11 @@ import { Award, Users, Target, TrendingUp, CheckCircle } from "lucide-react"
 
 export default function AboutPage() {
   const milestones = [
-    { year: "1995", title: "Company Founded", description: "Started as a small rice exporter in Mumbai" },
-    { year: "2005", title: "Regional Expansion", description: "Expanded operations to Vietnam and Thailand" },
-    { year: "2012", title: "Product Diversification", description: "Added cashew, cotton, and oilseeds to portfolio" },
-    { year: "2018", title: "Global Presence", description: "Established offices in 15+ countries" },
-    { year: "2023", title: "Sustainability Leader", description: "Achieved carbon-neutral operations" },
+    { year: "2008", title: "Company Founded", description: "Started as a small rice exporter in Mumbai" },
+    { year: "2014", title: "Regional Expansion", description: "Expanded operations to Vietnam and West Africa" },
+    { year: "2016", title: "Product Diversification", description: "Added cashew, cotton, and oilseeds to portfolio" },
+    { year: "2019", title: "Global Presence", description: "Established supply-chain in 15+ countries" },
+    { year: "2025", title: "Strategic Alliances", description: "Accelerated business growth with trusted partnerships and market expansion." },
   ]
 
   const values = [
@@ -60,9 +60,9 @@ export default function AboutPage() {
             />
           </div>
           <div className="relative container text-center">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-balance">About The King Group</h1>
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-balance">The King Group</h1>
             <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto text-balance leading-relaxed">
-              Three decades of excellence in connecting Asia's finest agricultural products with global markets
+            A leading agri-export partner supplying certified agricultural products from Asia with rigorous quality control and dependable global logistics.
             </p>
           </div>
         </section>
@@ -75,19 +75,13 @@ export default function AboutPage() {
                 <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">Our Story</h2>
                 <div className="space-y-4 text-lg text-muted leading-relaxed">
                   <p>
-                    Founded in 1995, The King Group began as a modest rice exporter in Mumbai with a vision to bridge
-                    the gap between Asia's agricultural abundance and global demand. What started with a single
-                    container of premium Basmati rice has grown into a diversified agri-export powerhouse.
+                  Founded on over a decade of deep experience in the raw cotton trade that began with Komal Amin Exports in Ahmedabad, Gujarat, The King Group evolved from an indenting specialist into a diversified agri-export and commodity trading consortium. Early mastery of raw cotton sourcing, quality control, and export documentation created the operational backbone for broader commodity exports.
                   </p>
                   <p>
-                    Today, we source and supply eight major product categories from India, Vietnam, and Thailand to over
-                    40 countries across Africa, the Middle East, Europe, and the Americas. Our success is built on
-                    unwavering commitment to quality, reliability, and sustainable practices.
+                  Since formalizing operations with The Karunesh Corporation in 2019, the group expanded into rice, cashew, oilseeds, spices, tiles, pharmaceuticals, and FMCG — supplying certified agricultural products to buyers across Africa, the Middle East, Southeast Asia and the Americas. Integrated supply-chain management, vendor partnerships, and rigorous laboratory testing ensure traceability, export-grade packing and on-time delivery for international markets.
                   </p>
                   <p>
-                    With strategic partnerships across the supply chain—from farmers and processors to logistics
-                    providers and distributors—we ensure that every product meets international standards and exceeds
-                    customer expectations.
+                  Today, The King Group is a merchant exporter and indenter that combines Gujarat-rooted sourcing expertise with global logistics capability. Focused on sustainable sourcing, ethical trade, competitive pricing and long-term partnerships, we deliver high-quality, certified agri-products to international buyers while maintaining strict quality assurance and transparent export processes.
                   </p>
                 </div>
               </div>
@@ -112,9 +106,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-2xl font-serif font-bold mb-4">Our Mission</h3>
                 <p className="text-muted leading-relaxed">
-                  To be the most trusted partner in global agri-export by delivering premium quality products,
-                  maintaining sustainable practices, and fostering long-term relationships that create value for all
-                  stakeholders.
+                The King Group delivers certified agricultural products globally via sustainable sourcing, strict quality control and transparent logistics—ensuring traceability, on-time delivery and lasting partnerships.
                 </p>
               </div>
               <div className="bg-white p-8 rounded-lg shadow-sm">
@@ -123,8 +115,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-2xl font-serif font-bold mb-4">Our Vision</h3>
                 <p className="text-muted leading-relaxed">
-                  To become the leading global agri-export company recognized for innovation, sustainability, and
-                  excellence, connecting continents through quality products and ethical business practices.
+                As an emerging partner in global trade, The King Group advances sustainable sourcing and exemplary supply-chain solutions to deliver high-quality agricultural products internationally with integrity and operational excellence.
                 </p>
               </div>
             </div>

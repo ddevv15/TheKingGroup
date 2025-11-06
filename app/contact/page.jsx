@@ -349,7 +349,7 @@ export default function ContactPage() {
                     timelines.
                   </p>
                   <a href="mailto:sales@thekinggroup.com" className="text-sm font-medium underline hover:no-underline">
-                    sales@thekinggroup.com
+                    cmo@thekinggroup.in
                   </a>
                 </div>
 
@@ -365,7 +365,7 @@ export default function ContactPage() {
                     href="mailto:docs@thekinggroup.com"
                     className="text-sm font-medium text-primary hover:text-accent transition-colors"
                   >
-                    docs@thekinggroup.com
+                    info@thekinggroup.in
                   </a>
                 </div>
 

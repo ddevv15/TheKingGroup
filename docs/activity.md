@@ -715,3 +715,88 @@
   - All product images across homepage, products page, and overview page now match
   - Consistent image usage throughout the entire site improves user experience
   - All 8 product categories in overview page now use the correct images
+
+## 2025-01-27 (Add Product Carousel to Homepage)
+
+- Prompt: "on home page show only four cards for the home page, add a left and right browsing button to browse through all the products, do not show all the products at once on the home page"
+
+- Actions:
+  - Converted homepage to client component (`"use client"` directive) to enable interactive carousel
+  - Added React state management with `useState` to track current product slide index
+  - Implemented product carousel functionality:
+    - Shows 4 products at a time (instead of all 11)
+    - Added left/right navigation buttons (ChevronLeft/ChevronRight icons)
+    - Navigation buttons disabled at first/last slide with visual feedback
+    - Added carousel indicators (dots) below products for direct navigation
+    - Smooth transitions and hover effects on navigation buttons
+  - Updated products section:
+    - Changed from static grid to carousel with relative positioning
+    - Added padding to grid to accommodate navigation buttons
+    - Navigation buttons positioned absolutely on left/right sides
+    - Indicators show current slide position and allow direct navigation
+
+- Technical Details:
+  - Products per page: 4
+  - Total slides: 3 (11 products ÷ 4 = 2.75, rounded up to 3)
+  - Slide 0: Products 0-3 (Rice, Cashew, Cotton, Oilseeds)
+  - Slide 1: Products 4-7 (Spices, Tiles, Pharma, Supermarket Products)
+  - Slide 2: Products 8-10 (Edible Oil, Castor Oil, Pulses)
+  - Navigation buttons have disabled states with opacity and cursor changes
+  - Indicators use active state styling (wider, primary color)
+
+- Notes:
+  - Homepage now shows only 4 products at a time for better focus
+  - Users can browse through all products using left/right buttons or indicator dots
+  - Improved user experience with interactive navigation
+  - Maintains responsive design (1 column mobile, 2 columns tablet, 4 columns desktop)
+  - All existing product card styling and hover effects preserved
+
+## 2025-01-27 (GPU Performance Optimization - Reduce Lag)
+
+- Prompt: "make the whole website gpu optimized it feels very laggy on the deployed sit"
+
+- Actions:
+  - **Global CSS Optimizations** (`app/globals.css`):
+    - Added GPU acceleration to all images and videos (`transform: translateZ(0)`)
+    - Added `backface-visibility: hidden` to prevent flickering
+    - Added `will-change: transform` to cards and containers
+    - Added CSS containment (`contain: layout style`) to sections and grids
+    - Enabled font smoothing for better text rendering
+  - **Homepage Optimizations** (`app/page.jsx`):
+    - Video element: Added `preload="auto"` and GPU acceleration styles
+    - Product cards: Replaced CSS transitions with GPU-accelerated transforms
+    - Image hover effects: Use `transform: scale()` instead of CSS transitions
+    - Navigation buttons: Use `translate3d()` for GPU acceleration
+    - Carousel indicators: Added GPU acceleration
+    - All buttons/links: Use `transform: scale()` instead of CSS transitions
+    - Background images: Added lazy loading and GPU acceleration
+    - Global Reach cards: Optimized hover effects with GPU transforms
+    - CTA buttons: GPU-accelerated scale transforms
+  - **Navigation Component** (`components/card-nav.jsx`):
+    - GSAP animations: Added `force3D: true` to all animations
+    - GPU-accelerated transforms for card animations
+  - **Next.js Config** (`next.config.mjs`):
+    - Enabled CSS optimization (`experimental.optimizeCss: true`)
+
+- Technical Optimizations:
+  - **Transform-based animations**: All animations use `transform` and `opacity` (GPU-accelerated properties)
+  - **Will-change hints**: Added `will-change: transform` to animated elements
+  - **CSS containment**: Used `contain: layout style paint` to isolate rendering
+  - **Lazy loading**: Added `loading="lazy"` and `decoding="async"` to images
+  - **Backface visibility**: Hidden to prevent flickering during transforms
+  - **3D transforms**: Using `translate3d()` and `translateZ(0)` to force GPU acceleration
+  - **Reduced repaints**: Replaced layout-triggering properties with transforms
+
+- Performance Improvements:
+  - Eliminated layout thrashing by using transforms instead of position changes
+  - Reduced repaints by isolating rendering with CSS containment
+  - GPU-accelerated all animations and transitions
+  - Optimized image loading with lazy loading
+  - Reduced main thread work by offloading to GPU
+
+- Notes:
+  - All hover effects now use GPU-accelerated transforms
+  - Animations should feel smoother and more responsive
+  - Reduced lag by eliminating layout recalculations
+  - Better performance on lower-end devices
+  - Maintains visual quality while improving performance

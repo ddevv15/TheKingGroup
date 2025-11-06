@@ -60,6 +60,6 @@ coverage/
 .DS_Store
 
 # Large media files
-public/hero_bg.mp4
-public/hero_bg.MP4
+# public/hero_bg.mp4 - now tracked in git
+# public/hero_bg.MP4
 

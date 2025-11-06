@@ -609,3 +609,30 @@
   - Vercel configuration ensures Git LFS files are pulled during build process
   - Video should now be visible on deployed site after next deployment
   - If issue persists, may need to verify Vercel has Git LFS installed in build environment or consider external hosting (Option 2)
+
+## 2025-01-27 (Fix GitHub Pages Deployment - Static Assets 404 Errors)
+
+- Prompt: "GET https://ddevv15.github.io/rice.jpg 404 (Not Found)... [multiple 404 errors for images, fonts, and video]"
+
+- Actions:
+  - Fixed GitHub Actions workflow (`.github/workflows/nextjs.yml`):
+    - Added `lfs: true` to checkout step to pull Git LFS files during build
+    - Ensures `hero_bg.mp4` and other LFS-tracked files are downloaded before build
+  - Fixed Next.js configuration (`next.config.mjs`) for static export:
+    - Set `output: 'export'` for GitHub Pages static site generation
+    - Set `images.unoptimized: true` (required for static export)
+    - Removed `headers()` function (not supported in static export)
+    - Removed `compress: true` option (not supported in static export)
+    - Security headers should be configured at GitHub Pages hosting level instead
+
+- Issues Identified:
+  1. **Git LFS files not pulled**: GitHub Actions checkout wasn't pulling LFS files, causing video and other assets to be missing
+  2. **Static export not configured**: Next.js wasn't configured for static export, causing build issues
+  3. **Incompatible config options**: `headers()` and `compress` don't work with static export
+
+- Notes:
+  - Site is deployed to GitHub Pages (not Vercel) - workflow automatically builds and deploys
+  - Git LFS files will now be pulled during GitHub Actions build process
+  - Static export configuration ensures all assets are properly included in build output
+  - After next deployment, all static assets (images, fonts, video) should load correctly
+  - If issues persist, may need to check GitHub Pages repository settings or consider external CDN hosting

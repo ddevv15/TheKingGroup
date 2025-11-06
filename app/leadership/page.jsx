@@ -33,7 +33,7 @@ export default function LeadershipPage() {
     {
       name: "Yashrajsinh Zala",
       title: "Chief Marketing Officer",
-      image: "/yashraj.jpeg",
+      image: "/Yashraj.jpeg",
       bio: "Multi-disciplinary entrepreneur passionate about global commerce, market strategy, and value creation. Leading growth in import-export while fostering strong international partnerships.",
       linkedin: "https://www.linkedin.com/in/yashrajsinh-zala-83469831a/",
       email: "cmo@thekinggroup.in",

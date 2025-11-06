@@ -11,17 +11,20 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
 ### Steps:
 
 1. **Install Vercel Blob SDK:**
+
    ```bash
    npm install @vercel/blob
    ```
 
 2. **Upload video via Vercel Dashboard:**
+
    - Go to your Vercel project dashboard
    - Navigate to Storage → Create Database → Blob
    - Upload `hero_bg.MP4` directly
    - Copy the blob URL
 
 3. **Use environment variable:**
+
    - Add `NEXT_PUBLIC_HERO_VIDEO_URL` to your Vercel environment variables
    - Set it to the blob URL
 
@@ -34,17 +37,22 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
      playsInline
      className="absolute inset-0 w-full h-full object-cover z-0"
    >
-     <source src={process.env.NEXT_PUBLIC_HERO_VIDEO_URL || "/hero_bg.MP4"} type="video/mp4" />
+     <source
+       src={process.env.NEXT_PUBLIC_HERO_VIDEO_URL || "/hero_bg.MP4"}
+       type="video/mp4"
+     />
    </video>
    ```
 
 **Pros:**
+
 - ✅ Integrated with Vercel
 - ✅ Automatic CDN
 - ✅ No external dependencies
 - ✅ Fast delivery
 
 **Cons:**
+
 - ⚠️ Requires Vercel Pro plan for larger files (free tier has limits)
 
 ---
@@ -58,11 +66,13 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
 1. **Sign up for Cloudinary** (free tier: 25 GB storage, 25 GB bandwidth/month)
 
 2. **Upload video:**
+
    - Go to Media Library in Cloudinary dashboard
    - Upload `hero_bg.MP4`
    - Copy the video URL (format: `https://res.cloudinary.com/your-cloud/video/upload/v1234567890/hero_bg.mp4`)
 
 3. **Add environment variable:**
+
    - Add `NEXT_PUBLIC_HERO_VIDEO_URL` to `.env.local` and Vercel
    - Set to Cloudinary URL
 
@@ -75,17 +85,22 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
      playsInline
      className="absolute inset-0 w-full h-full object-cover z-0"
    >
-     <source src={process.env.NEXT_PUBLIC_HERO_VIDEO_URL || "/hero_bg.MP4"} type="video/mp4" />
+     <source
+       src={process.env.NEXT_PUBLIC_HERO_VIDEO_URL || "/hero_bg.MP4"}
+       type="video/mp4"
+     />
    </video>
    ```
 
 **Pros:**
+
 - ✅ Free tier available
 - ✅ Automatic video optimization
 - ✅ CDN included
 - ✅ Easy to use
 
 **Cons:**
+
 - ⚠️ Free tier has bandwidth limits
 - ⚠️ External dependency
 
@@ -98,19 +113,22 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
 ### Steps:
 
 1. **Install Git LFS:**
+
    ```bash
    # macOS
    brew install git-lfs
-   
+
    # Or download from: https://git-lfs.github.com/
    ```
 
 2. **Initialize Git LFS:**
+
    ```bash
    git lfs install
    ```
 
 3. **Track video file:**
+
    ```bash
    git lfs track "public/hero_bg.MP4"
    git lfs track "public/hero_bg.mp4"
@@ -126,11 +144,13 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
    ```
 
 **Pros:**
+
 - ✅ Keeps file in repository
 - ✅ Version controlled
 - ✅ Works with Vercel (Vercel supports Git LFS)
 
 **Cons:**
+
 - ⚠️ GitHub free tier: 1 GB storage, 1 GB bandwidth/month
 - ⚠️ Your file is 173 MB, so you'll use ~17% of free quota per month
 - ⚠️ Requires Git LFS installation
@@ -148,11 +168,13 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
 3. **Use CloudFront URL** in environment variable
 
 **Pros:**
+
 - ✅ Highly scalable
 - ✅ Pay-as-you-go pricing
 - ✅ Enterprise-grade reliability
 
 **Cons:**
+
 - ⚠️ More complex setup
 - ⚠️ Requires AWS account
 - ⚠️ Costs money (but very cheap for small sites)
@@ -179,6 +201,7 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
 ## Recommended Solution
 
 **For your use case, I recommend Option 2 (Cloudinary)** because:
+
 - Free tier is sufficient for a single video
 - Easy setup (5 minutes)
 - Automatic optimization
@@ -204,13 +227,14 @@ Since `hero_bg.MP4` (173.62 MB) exceeds GitHub's 100 MB limit, here are the best
 ## File Size Optimization Tips
 
 Before uploading, consider compressing the video:
+
 - **Target size:** < 50 MB for faster loading
 - **Tools:** HandBrake, FFmpeg, or online compressors
 - **Format:** MP4 (H.264 codec) is best for web
 - **Resolution:** 1920x1080 is usually sufficient (don't need 4K for background)
 
 Example FFmpeg command:
+
 ```bash
 ffmpeg -i hero_bg.MP4 -vcodec h264 -acodec aac -crf 28 -preset slow hero_bg_compressed.mp4
 ```
-

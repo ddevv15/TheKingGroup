@@ -142,8 +142,7 @@ export default function HomePage() {
             muted 
             playsInline 
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover z-0"
-            style={{ transform: 'translateZ(0)', willChange: 'auto' }}
+            className="absolute inset-0 w-full h-full object-cover z-0 gpu-accelerated"
           >
             <source src="/hero_bg.mp4" type="video/mp4" />
           </video>
@@ -157,14 +156,7 @@ export default function HomePage() {
             </p>
             <a
               href="/products"
-              className="inline-block px-10 py-5 bg-accent text-accent-foreground text-lg font-semibold rounded-lg shadow-xl focus:ring-4 focus:ring-accent/50 will-change-transform transition-transform duration-200"
-              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateZ(0) scale(1.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateZ(0) scale(1)'
-              }}
+              className="inline-block px-10 py-5 bg-accent text-accent-foreground text-lg font-semibold rounded-lg shadow-xl focus:ring-4 focus:ring-accent/50 gpu-scale-hover"
             >
               Explore Our Products
             </a>
@@ -199,12 +191,11 @@ export default function HomePage() {
               <button
                 onClick={handlePrevious}
                 disabled={currentProductIndex === 0}
-                className={`absolute left-0 sm:left-2 md:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 will-change-transform ${
+                className={`absolute left-0 sm:left-2 md:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated ${
                   currentProductIndex === 0
                     ? "opacity-50 cursor-not-allowed"
                     : "hover:scale-110"
                 }`}
-                style={{ transform: 'translate3d(0, -50%, 0)', backfaceVisibility: 'hidden' }}
                 aria-label="Previous products"
               >
                 <ChevronLeft
@@ -215,12 +206,11 @@ export default function HomePage() {
               <button
                 onClick={handleNext}
                 disabled={currentProductIndex >= maxIndex}
-                className={`absolute right-0 sm:right-2 md:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 will-change-transform ${
+                className={`absolute right-0 sm:right-2 md:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated ${
                   currentProductIndex >= maxIndex
                     ? "opacity-50 cursor-not-allowed"
                     : "hover:scale-110"
                 }`}
-                style={{ transform: 'translate3d(0, -50%, 0)', backfaceVisibility: 'hidden' }}
                 aria-label="Next products"
               >
                 <ChevronRight
@@ -234,34 +224,15 @@ export default function HomePage() {
                 {visibleProducts.map((product) => (
                   <div
                     key={product.name}
-                    className="group bg-card rounded-xl overflow-hidden shadow-lg border border-border will-change-transform hover:-translate-y-2 hover:shadow-2xl transition-transform duration-300"
-                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateZ(0) translateY(-8px)'
-                      e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateZ(0) translateY(0)'
-                      e.currentTarget.style.boxShadow = ''
-                    }}
+                    className="group bg-card rounded-xl overflow-hidden shadow-lg border border-border gpu-lift-hover hover:shadow-2xl"
                   >
-                    <div 
-                      className="relative h-56 overflow-hidden"
-                      style={{ contain: 'layout style paint' }}
-                    >
+                    <div className="relative h-56 overflow-hidden">
                       <img
                         src={product.image || "/placeholder.svg"}
                         alt={product.name}
                         loading="lazy"
                         decoding="async"
-                        className="w-full h-full object-cover transition-transform duration-500 ease-out will-change-transform"
-                        style={{ transform: 'translateZ(0) scale(1)', backfaceVisibility: 'hidden' }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateZ(0) scale(1.1)'
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateZ(0) scale(1)'
-                        }}
+                        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110 gpu-accelerated"
                       />
                     </div>
                     <div className="p-6">
@@ -274,14 +245,7 @@ export default function HomePage() {
                         Learn More
                         <ArrowRight 
                           size={18} 
-                          className="ml-2 transition-transform duration-200 will-change-transform"
-                          style={{ transform: 'translateZ(0) translateX(0)' }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateZ(0) translateX(4px)'
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateZ(0) translateX(0)'
-                          }}
+                          className="ml-2 transition-transform duration-200 group-hover:translate-x-1 gpu-accelerated"
                         />
                       </a>
                     </div>
@@ -295,10 +259,9 @@ export default function HomePage() {
                   <button
                     key={index}
                     onClick={() => setCurrentProductIndex(index)}
-                    className={`h-2 rounded-full transition-all duration-200 will-change-transform ${
+                    className={`h-2 rounded-full transition-all duration-200 gpu-accelerated ${
                       index === currentProductIndex ? "bg-primary w-8" : "bg-muted w-2 hover:bg-primary/50"
                     }`}
-                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                     aria-label={`Go to slide ${index + 1}`}
                   />
                 ))}
@@ -314,8 +277,7 @@ export default function HomePage() {
             alt="White tiles background"
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 w-full h-full object-cover z-0"
-            style={{ transform: 'translateZ(0)', willChange: 'auto', backfaceVisibility: 'hidden' }}
+            className="absolute inset-0 w-full h-full object-cover z-0 gpu-accelerated"
           />
           <div className="relative z-10 container px-6">
             {/* Global Reach Section */}
@@ -330,14 +292,7 @@ export default function HomePage() {
                 {regions.slice(0, 4).map((region) => (
                   <div
                     key={region.name}
-                    className="text-center p-10 bg-secondary rounded-xl shadow-md border border-border will-change-transform transition-shadow duration-300"
-                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.boxShadow = ''
-                    }}
+                    className="text-center p-10 bg-secondary rounded-xl shadow-md border border-border transition-shadow duration-300 hover:shadow-xl gpu-accelerated"
                   >
                     {region.image ? (
                       <img
@@ -345,11 +300,10 @@ export default function HomePage() {
                         alt={region.name}
                         loading="lazy"
                         decoding="async"
-                        className="mx-auto mb-6 w-20 h-20 object-contain"
-                        style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                        className="mx-auto mb-6 w-20 h-20 object-contain gpu-accelerated"
                       />
                     ) : (
-                      <Globe size={56} className="mx-auto mb-6 text-primary" style={{ transform: 'translateZ(0)' }} />
+                      <Globe size={56} className="mx-auto mb-6 text-primary" />
                     )}
                     <h3 className="text-2xl font-serif font-bold mb-3 text-foreground">{region.name}</h3>
                     <p className="text-lg text-muted font-medium">{region.countries}</p>
@@ -359,14 +313,7 @@ export default function HomePage() {
               <div className="text-center">
                 <a
                   href="/global-presence"
-                  className="inline-flex items-center px-8 py-4 bg-primary text-primary-foreground font-semibold text-lg rounded-lg shadow-lg focus:ring-4 focus:ring-primary/50 will-change-transform transition-transform duration-200"
-                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateZ(0) scale(1.05)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateZ(0) scale(1)'
-                  }}
+                  className="inline-flex items-center px-8 py-4 bg-primary text-primary-foreground font-semibold text-lg rounded-lg shadow-lg focus:ring-4 focus:ring-primary/50 gpu-scale-hover"
                 >
                   View Full Map
                   <ArrowRight size={20} className="ml-3" />
@@ -386,22 +333,18 @@ export default function HomePage() {
                 {values.map((value) => {
                   const Icon = value.icon
                   return (
-                    <div key={value.title} className="text-center" style={{ contain: 'layout style' }}>
-                      <div 
-                        className="inline-flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 shadow-lg"
-                        style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                      >
+                    <div key={value.title} className="text-center">
+                      <div className="inline-flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 shadow-lg gpu-accelerated">
                         {value.image ? (
                           <img
                             src={value.image || "/placeholder.svg"}
                             alt={value.title}
                             loading="lazy"
                             decoding="async"
-                            className="w-10 h-10 object-contain"
-                            style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                            className="w-10 h-10 object-contain gpu-accelerated"
                           />
                         ) : (
-                          <Icon size={36} className="text-accent-foreground" style={{ transform: 'translateZ(0)' }} />
+                          <Icon size={36} className="text-accent-foreground" />
                         )}
                       </div>
                       <h3 className="text-2xl font-serif font-bold mb-4 text-foreground">{value.title}</h3>
@@ -421,10 +364,9 @@ export default function HomePage() {
             alt="Tiles background"
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 w-full h-full object-cover z-0"
-            style={{ transform: 'translateZ(0)', willChange: 'auto', backfaceVisibility: 'hidden' }}
+            className="absolute inset-0 w-full h-full object-cover z-0 gpu-accelerated"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 z-10" style={{ transform: 'translateZ(0)' }} />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 z-10 gpu-accelerated" />
           <div className="relative z-20 container max-w-4xl text-center px-6">
             <h2 className="text-4xl md:text-5xl font-serif font-bold mb-8 text-balance text-white">
               Ready to Partner With Us?
@@ -435,27 +377,13 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a
                 href="/contact"
-                className="px-10 py-5 bg-accent text-accent-foreground text-lg font-semibold rounded-lg shadow-lg focus:ring-4 focus:ring-accent/50 will-change-transform transition-transform duration-200"
-                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateZ(0) scale(1.05)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateZ(0) scale(1)'
-                }}
+                className="px-10 py-5 bg-accent text-accent-foreground text-lg font-semibold rounded-lg shadow-lg focus:ring-4 focus:ring-accent/50 gpu-scale-hover"
               >
                 Contact Us
               </a>
               <a
                 href="/products"
-                className="px-10 py-5 bg-white text-foreground text-lg font-semibold rounded-lg border-2 border-white shadow-md focus:ring-4 focus:ring-white/50 will-change-transform transition-transform duration-200"
-                style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateZ(0) scale(1.05)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateZ(0) scale(1)'
-                }}
+                className="px-10 py-5 bg-white text-foreground text-lg font-semibold rounded-lg border-2 border-white shadow-md focus:ring-4 focus:ring-white/50 gpu-scale-hover"
               >
                 View Products
               </a>

@@ -199,33 +199,37 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* GPU-accelerated hover effects */
-  button,
-  a {
+  /* GPU-accelerated hover effects - only when needed */
+  button:hover,
+  a:hover {
+    transform: translateZ(0);
+  }
+
+  /* GPU-optimized utility classes */
+  .gpu-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
 
-  /* Optimize cards and containers */
-  .group,
-  [class*="card"],
-  [class*="rounded"] {
+  .gpu-scale-hover {
     transform: translateZ(0);
-    will-change: transform;
     backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    transition: transform 0.2s ease-out;
   }
 
-  /* Reduce repaints with contain */
-  section,
-  main {
-    contain: layout style;
+  .gpu-scale-hover:hover {
+    transform: translateZ(0) scale(1.05);
   }
 
-  /* Optimize grid layouts */
-  [class*="grid"] {
-    contain: layout;
+  .gpu-lift-hover {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  }
+
+  .gpu-lift-hover:hover {
+    transform: translateZ(0) translateY(-8px);
   }
 
   /* Enhanced typography and container styles */

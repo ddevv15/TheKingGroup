@@ -123,17 +123,31 @@ export default function HomePage() {
   )
 
   const handlePrevious = () => {
-    setCurrentProductIndex((prev) => Math.max(0, prev - 1))
+    setCurrentProductIndex((prev) => {
+      if (prev > 0) {
+        return prev - 1
+      } else {
+        // Loop to the end
+        return maxIndex
+      }
+    })
   }
 
   const handleNext = () => {
-    setCurrentProductIndex((prev) => Math.min(maxIndex, prev + 1))
+    setCurrentProductIndex((prev) => {
+      if (prev < maxIndex) {
+        return prev + 1
+      } else {
+        // Loop back to the beginning
+        return 0
+      }
+    })
   }
 
   return (
     <>
       <Header />
-      <main className="pt-28">
+      <main className="pt-28 bg-white">
         {/* Hero Section */}
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <video 
@@ -146,6 +160,7 @@ export default function HomePage() {
           >
             <source src="/hero_bg.mp4" type="video/mp4" />
           </video>
+          <div className="absolute inset-0 bg-black/30 z-10" />
           <div className="relative z-20 container text-center text-white px-6">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-8 text-balance leading-tight">
               Global Excellence in Agri-Export
@@ -190,32 +205,22 @@ export default function HomePage() {
               {/* Navigation Buttons */}
               <button
                 onClick={handlePrevious}
-                disabled={currentProductIndex === 0}
-                className={`absolute left-0 sm:left-2 md:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated ${
-                  currentProductIndex === 0
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:scale-110"
-                }`}
+                className="absolute left-0 sm:left-2 md:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated hover:scale-110"
                 aria-label="Previous products"
               >
                 <ChevronLeft
                   size={20}
-                  className={`sm:w-6 sm:h-6 md:w-7 md:h-7 transition-colors duration-200 ${currentProductIndex === 0 ? "text-muted" : "text-primary"}`}
+                  className="sm:w-6 sm:h-6 md:w-7 md:h-7 transition-colors duration-200 text-primary"
                 />
               </button>
               <button
                 onClick={handleNext}
-                disabled={currentProductIndex >= maxIndex}
-                className={`absolute right-0 sm:right-2 md:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated ${
-                  currentProductIndex >= maxIndex
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:scale-110"
-                }`}
+                className="absolute right-0 sm:right-2 md:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated hover:scale-110"
                 aria-label="Next products"
               >
                 <ChevronRight
                   size={20}
-                  className={`sm:w-6 sm:h-6 md:w-7 md:h-7 transition-colors duration-200 ${currentProductIndex >= maxIndex ? "text-muted" : "text-primary"}`}
+                  className="sm:w-6 sm:h-6 md:w-7 md:h-7 transition-colors duration-200 text-primary"
                 />
               </button>
 

@@ -314,11 +314,14 @@ const CardNav = ({
     setOpenDropdown(openDropdown === key ? null : key)
   }
 
-  // Close dropdown when clicking outside
+  // Close dropdown when clicking outside (desktop only)
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (openDropdown && !event.target.closest(`[data-dropdown="${openDropdown}"]`)) {
-        setOpenDropdown(null)
+      // Only handle desktop dropdowns, not mobile menu
+      if (typeof window !== "undefined" && window.innerWidth >= 768) {
+        if (openDropdown && !event.target.closest(`[data-dropdown="${openDropdown}"]`)) {
+          setOpenDropdown(null)
+        }
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
@@ -426,9 +429,13 @@ const CardNav = ({
 
             {/* Mobile Hamburger Menu */}
             <button
-              className="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-lg"
-              onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}
+              className="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-lg z-50"
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsHamburgerOpen((prev) => !prev)
+              }}
               aria-label={isHamburgerOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isHamburgerOpen}
               style={{ color: menuColor || "#1e3a5f" }}
             >
               <div
@@ -452,14 +459,17 @@ const CardNav = ({
           {/* Mobile Menu */}
           <div
             className={`md:hidden overflow-hidden transition-all duration-300 ${
-              isHamburgerOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+              isHamburgerOpen ? "max-h-[600px] opacity-100 pointer-events-auto" : "max-h-0 opacity-0 pointer-events-none"
             }`}
           >
             <div className="py-4 space-y-1 border-t border-gray-200/50">
               {Object.entries(menuItems).map(([key, menu]) => (
                 <div key={key} className="space-y-1">
                   <button
-                    onClick={() => toggleDropdown(key)}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      toggleDropdown(key)
+                    }}
                     className="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/30"
                     style={{ color: menuColor || "#1e3a5f" }}
                   >

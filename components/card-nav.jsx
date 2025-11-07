@@ -283,6 +283,7 @@ const CardNav = ({
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
   const navRef = useRef(null)
   const dropdownRefs = useRef({})
+  const closeTimeoutRef = useRef(null)
 
   // Build menu items from props
   const menuItems = {
@@ -314,19 +315,30 @@ const CardNav = ({
     setOpenDropdown(openDropdown === key ? null : key)
   }
 
-  // Close dropdown when clicking outside (desktop only)
+  const handleMouseEnter = (key) => {
+    // Clear any pending close timeout
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
+    setOpenDropdown(key)
+  }
+
+  const handleMouseLeave = () => {
+    // Add a small delay before closing to allow cursor movement
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null)
+    }, 150)
+  }
+
+  // Cleanup timeout on unmount
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Only handle desktop dropdowns, not mobile menu
-      if (typeof window !== "undefined" && window.innerWidth >= 768) {
-        if (openDropdown && !event.target.closest(`[data-dropdown="${openDropdown}"]`)) {
-          setOpenDropdown(null)
-        }
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current)
       }
     }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [openDropdown])
+  }, [])
 
   // Animate dropdown with GSAP
   useLayoutEffect(() => {
@@ -346,7 +358,7 @@ const CardNav = ({
     >
       <nav
         ref={navRef}
-        className="card-nav w-full backdrop-blur-md bg-white/80 border-b border-white/20 shadow-sm"
+        className="card-nav w-full bg-transparent"
       >
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
@@ -375,12 +387,11 @@ const CardNav = ({
                   key={key}
                   className="relative"
                   data-dropdown={key}
-                  onMouseEnter={() => setOpenDropdown(key)}
-                  onMouseLeave={() => setOpenDropdown(null)}
+                  onMouseEnter={() => handleMouseEnter(key)}
+                  onMouseLeave={handleMouseLeave}
                 >
                   <button
-                    onClick={() => toggleDropdown(key)}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-primary/20 pointer-events-auto"
                     style={{ color: menuColor || "#1e3a5f" }}
                   >
                     {menu.label}
@@ -396,16 +407,16 @@ const CardNav = ({
                       ref={(el) => {
                         if (el) dropdownRefs.current[key] = el
                       }}
-                      className="absolute top-full left-0 mt-2 w-56 rounded-lg shadow-xl border border-gray-100 bg-white overflow-hidden"
+                      className="absolute top-full left-0 mt-1 w-56 rounded-lg shadow-xl border border-gray-100 bg-white overflow-hidden pointer-events-auto"
                       style={{ zIndex: 1000 }}
-                      onMouseEnter={() => setOpenDropdown(key)}
-                      onMouseLeave={() => setOpenDropdown(null)}
+                      onMouseEnter={() => handleMouseEnter(key)}
+                      onMouseLeave={handleMouseLeave}
                     >
                       {menu.items.map((item, idx) => (
                         <Link
                           key={idx}
                           href={item.href}
-                          className="dropdown-item block px-4 py-3 text-sm transition-colors hover:bg-primary/10 hover:text-primary first:pt-4 last:pb-4"
+                          className="dropdown-item block px-4 py-3 text-sm transition-colors hover:bg-primary/10 hover:text-primary first:pt-4 last:pb-4 cursor-pointer"
                           style={{ color: menuColor || "#1e3a5f" }}
                           onClick={() => setOpenDropdown(null)}
                         >
@@ -494,7 +505,7 @@ const CardNav = ({
                           }}
                         >
                           {item.label}
-                        </Link>
+                  </Link>
                 ))}
               </div>
                   )}

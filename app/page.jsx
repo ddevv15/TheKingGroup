@@ -8,56 +8,67 @@ import { ArrowRight, Globe, Leaf, ChevronLeft, ChevronRight } from "lucide-react
 export default function HomePage() {
   const products = [
     {
+      id: "rice",
       name: "Rice",
       description: "Premium Basmati and non-Basmati varieties",
       image: "/rice.jpg",
     },
     {
+      id: "cashew",
       name: "Cashew",
       description: "Grade A cashew nuts from Vietnam and India",
       image: "/cashew.jpg",
     },
     {
+      id: "cotton",
       name: "Cotton",
       description: "High-quality raw cotton and cotton products",
       image: "/cotton-bales-in-warehouse.jpg",
     },
     {
+      id: "oilseeds",
       name: "Oilseeds",
       description: "Sesame, sunflower, and groundnut seeds",
       image: "/oilseeds.jpg",
     },
     {
+      id: "spices",
       name: "Spices",
       description: "Authentic Indian spices and seasonings",
       image: "/spices.jpg",
     },
     {
+      id: "tiles",
       name: "Tiles",
       description: "Ceramic and porcelain tiles for all applications",
       image: "/tiles.jpg",
     },
     {
+      id: "pharma",
       name: "Pharma",
       description: "Quality pharmaceutical ingredients and products",
       image: "/pharmaceutical-products-clean.jpg",
     },
     {
+      id: "supermarket",
       name: "Supermarket Products",
       description: "FMCG and consumer goods for retail",
       image: "/supermarket-products-shelf.jpg",
     },
     {
+      id: "edible-oil",
       name: "Edible Oil",
       description: "FMCG and consumer goods for retail",
       image: "/edibleoil.jpg",
     },
     {
+      id: "castor-oil",
       name: "Castor Oil",
       description: "FMCG and consumer goods for retail",
       image: "/castoroil.jpg",
     },
     {
+      id: "pulses",
       name: "Pulses",
       description: "FMCG and consumer goods for retail",
       image: "/pulses.jpg",
@@ -147,7 +158,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <main className="pt-28 bg-white">
+      <main>
         {/* Hero Section */}
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <video 
@@ -186,8 +197,8 @@ export default function HomePage() {
             </h2>
             <p className="text-xl text-muted leading-relaxed">
               The King Group stands as a trusted partner in global agri-export, delivering premium products sourced from
-              the finest regions of India, Vietnam, and West Africa. With decades of expertise and an unwavering
-              commitment to quality, we serve distributors, manufacturers, and retailers across four continents.
+              the finest regions of India, Southeast Asia, and West Africa. With decades of expertise and an unwavering
+              commitment to quality, we serve distributors, manufacturers, and retailers across six continents.
             </p>
           </div>
         </section>
@@ -244,7 +255,7 @@ export default function HomePage() {
                       <h3 className="text-2xl font-serif font-bold mb-3 text-foreground">{product.name}</h3>
                       <p className="text-base text-muted mb-5 leading-relaxed">{product.description}</p>
                       <a
-                        href="/products"
+                        href={`/products?id=${product.id}`}
                         className="inline-flex items-center text-base font-semibold text-primary hover:text-accent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent rounded px-2 py-1"
                       >
                         Learn More

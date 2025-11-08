@@ -10,44 +10,44 @@ export default function ProductsOverviewPage() {
     {
       id: "rice",
       name: "Rice & Grains",
-      description: "Premium Basmati and non-Basmati rice varieties from the finest paddy fields",
+      description: "Premium quality rice varieties including Basmati, Parboiled, and Long Grain rice from India, Vietnam, and Thailand",
       image: "/rice.jpg",
       highlights: ["Multiple varieties", "Export quality", "Certified origins"],
     },
     {
       id: "cashew",
       name: "Cashew & Nuts",
-      description: "Grade A cashew nuts processed to international standards",
+      description: "Raw Cashew Nuts (RCN) from Africa and processed Cashew Kernels from India & Vietnam with multiple grades",
       image: "/cashew.jpg",
-      highlights: ["Premium grades", "Vacuum sealed", "Quality assured"],
+      highlights: ["CEPC / AFI standards", "Multiple grades (W180-W500)", "Vacuum Flaxi/Tin packaging"],
     },
     {
       id: "cotton",
       name: "Cotton & Textiles",
-      description: "High-quality raw cotton for textile manufacturing worldwide",
+      description: "Quality raw cotton, cotton seeds, and cottonseed oil from India and Africa",
       image: "/cotton-bales-in-warehouse.jpg",
-      highlights: ["Long staple", "Organic options", "Bulk supply"],
+      highlights: ["Raw Cotton", "Cotton Seeds", "Cottonseed Oil"],
     },
     {
       id: "oilseeds",
       name: "Oilseeds",
-      description: "Premium sesame, sunflower, and groundnut seeds",
+      description: "Peanut/Groundnut, Sesame Seeds, Cottonseed and related products from India, Myanmar, and Africa",
       image: "/oilseeds.jpg",
-      highlights: ["High oil content", "99% purity", "Multiple varieties"],
+      highlights: ["Best Quality", "As per Requirements", "Multiple varieties"],
     },
     {
       id: "spices",
       name: "Spices",
-      description: "Authentic Indian spices with rich aroma and flavor",
+      description: "Indian Red Dry Chilly, Cumin, Black Pepper, Cinnamon, and Star Aniseed from India and Asia",
       image: "/spices.jpg",
-      highlights: ["Steam sterilized", "No additives", "Full traceability"],
+      highlights: ["Best Quality", "Affordable Price", "As per Buyer's Requirement"],
     },
     {
       id: "tiles",
       name: "Tiles",
-      description: "Ceramic and porcelain tiles for residential and commercial use",
+      description: "Premium tiles from Morbi, India exported worldwide",
       image: "/tiles.jpg",
-      highlights: ["Multiple sizes", "Slip resistant", "Durable finish"],
+      highlights: ["Good Quality", "Wide range of Designs", "Competitive Price"],
     },
     {
       id: "pharma",
@@ -130,7 +130,6 @@ export default function ProductsOverviewPage() {
                     </h3>
                   </div>
                   <div className="p-6">
-                    <p className="text-sm text-muted mb-4 leading-relaxed">{category.description}</p>
                     <ul className="space-y-2 mb-4">
                       {category.highlights.map((highlight, index) => (
                         <li key={index} className="flex items-center gap-2 text-sm">

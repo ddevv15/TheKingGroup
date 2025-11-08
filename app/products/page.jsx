@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { MapPin, Package, CheckCircle, ArrowRight } from "lucide-react"
@@ -8,17 +8,48 @@ import { MapPin, Package, CheckCircle, ArrowRight } from "lucide-react"
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [expandedSpecs, setExpandedSpecs] = useState({})
+  const [expandedVarieties, setExpandedVarieties] = useState({})
+  
+  // Handle product ID from query parameter
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search)
+      const productId = params.get("id")
+      if (productId) {
+        // Scroll to the product after a short delay to ensure DOM is ready
+        setTimeout(() => {
+          const element = document.getElementById(`product-${productId}`)
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" })
+            // Highlight the product briefly
+            element.classList.add("ring-4", "ring-accent", "ring-offset-4")
+            setTimeout(() => {
+              element.classList.remove("ring-4", "ring-accent", "ring-offset-4")
+            }, 2000)
+          }
+        }, 100)
+      }
+    }
+  }, [])
 
   const products = [
     {
       id: "rice",
       name: "Rice",
       category: "Grains",
-      description: "Premium Basmati and non-Basmati rice varieties sourced from the finest paddy fields",
+      description: "Premium quality rice varieties including Basmati, Parboiled, and Long Grain rice from India, Vietnam, and Thailand",
       image: "/rice.jpg",
-      origin: ["India", "Thailand", "Vietnam"],
-      destinations: ["West Africa", "Middle East", "Europe", "SouthEast Asia", "South Asia"],
-      varieties: ["Basmati 1121", "Sella Rice", "Jasmine Rice", "Parboiled Rice", "Brown Rice"],
+      origin: ["India", "Vietnam", "Thailand"],
+      destinations: ["African Countries", "Saudi Arabia", "Iran", "Iraq", "Malaysia", "Philippines", "Brazil", "Persian Gulf countries"],
+      varieties: [
+        "IR64 Parboiled & Raw Rice (Long Grain) - Good Quality",
+        "IR36 Parboiled & Raw Rice (Long Grain) - Affordable price",
+        "Swarna Parboiled & Raw Rice (Medium Grain)",
+        "Sona Masoori Rice (Short Grain)",
+        "100% Broken Rice (Raw & Parboiled)",
+        "1121 Sella Golden Basmati Rice",
+        "Pusa Steam Basmati Rice",
+      ],
       specifications: [
         "Moisture content: 12-14%",
         "Broken grains: <5%",
@@ -30,16 +61,25 @@ export default function ProductsPage() {
       id: "cashew",
       name: "Cashew Nuts",
       category: "Nuts",
-      description: "Grade A cashew nuts processed to international standards",
+      description: "Raw Cashew Nuts (RCN) and processed Cashew Kernels from Africa, India, and Vietnam to international standards",
       image: "/cashew.jpg",
-      origin: ["India", "Vietnam"],
-      destinations: ["Middle East", "Europe", "SouthEast Asia"],
-      varieties: ["W180", "W210", "W240", "W320", "Splits", "Pieces"],
+      origin: ["Raw Cashew Nuts: Ivory Coast, Benin, Ghana, Gambia, Guinea-Bissau, Nigeria, Tanzania, Indonesia, Cambodia", "Cashew Kernels: India, Vietnam"],
+      destinations: ["Raw Cashew Nuts: India & Vietnam, Worldwide", "Cashew Kernels: Worldwide"],
+      varieties: [
+        "White Wholes (WW): W180, W210, W240, W320, W450, W500",
+        "Scorched Wholes (SW): SW180, SW210, SW240, SW320, SW450, SW500",
+        "Splits",
+        "LWP (Long White Pieces)",
+        "SWP (Small White Pieces)",
+        "BB (Baby Bites)",
+        "Dessert Wholes SSW (Scorched wholes seconds)",
+        "DW (Dessert wholes)",
+      ],
       specifications: [
-        "Moisture: 5% maximum",
-        "Broken: Grade specific",
-        "Color: Natural white/pale ivory",
-        "Packaging: Vacuum sealed",
+        "Quality: As per international standards",
+        "Standards: CEPC / AFI quality parameters",
+        "Packaging: Vacuum Flaxi pack or Tin Pack",
+        "RCN: Proper Quality, Packing, Loading, and Price",
       ],
     },
     {
@@ -48,14 +88,11 @@ export default function ProductsPage() {
       category: "Fibers",
       description: "High-quality raw cotton and cotton products for textile manufacturing",
       image: "/cotton-bales-in-warehouse.jpg",
-      origin: ["India"],
-      destinations: ["West Africa", "Middle East", "SouthEast Asia"],
-      varieties: ["Long Staple Cotton", "Medium Staple", "Short Staple", "Organic Cotton"],
+      origin: ["Gujarat, India", "Benin", "Togo", "Burkina Faso", "Other African Countries"],
+      destinations: ["China", "Bangladesh", "Vietnam", "Indonesia", "Malaysia", "Many more countries"],
+      varieties: ["Raw Cotton", "Cotton Seeds", "Cottonseed Oil"],
       specifications: [
-        "Staple length: 28-34mm",
-        "Micronaire: 3.5-4.9",
-        "Strength: 26-30 g/tex",
-        "Moisture: 7.5% maximum",
+        "Quality Products from renowned Companies",
       ],
     },
     {
@@ -64,10 +101,10 @@ export default function ProductsPage() {
       category: "Seeds",
       description: "Premium quality sesame, sunflower, and groundnut seeds",
       image: "/oilseeds.jpg",
-      origin: ["India", "Vietnam"],
-      destinations: ["Middle East", "Europe", "West Africa"],
-      varieties: ["Sesame Seeds", "Sunflower Seeds", "Groundnut", "Mustard Seeds"],
-      specifications: ["Oil content: Variety specific", "Purity: 99% minimum", "Moisture: 6-8%", "Free from aflatoxin"],
+      origin: ["Gujarat, India", "African Countries", "Myanmar", "Sudan", "Burkina Faso", "Senegal"],
+      destinations: ["China", "Vietnam", "Indonesia", "Malaysia", "Russia", "Gulf Countries", "European Countries"],
+      varieties: ["Peanut / Groundnut", "Sesame Seed", "Cottonseed", "Cottonseed Meal", "Cottonseed Hulls", "Cottonseed Oil"],
+      specifications: ["As per require quality and quantity", "Best Quality", "As per Requirements"],
     },
     {
       id: "spices",
@@ -75,10 +112,10 @@ export default function ProductsPage() {
       category: "Spices",
       description: "Authentic Indian spices and seasonings with rich aroma and flavor",
       image: "/spices.jpg",
-      origin: ["India"],
-      destinations: ["Middle East", "Europe", "West Africa", "SouthEast Asia", "South Asia"],
-      varieties: ["Turmeric", "Cumin", "Coriander", "Black Pepper", "Cardamom", "Chili"],
-      specifications: ["Moisture: 10-12%", "Purity: 98% minimum", "No artificial colors", "Steam sterilized available"],
+      origin: ["India", "Gujarat, India", "Vietnam", "Indonesia", "Cambodia", "Sri Lanka", "China"],
+      destinations: ["All Over the World", "Asia", "Canada", "Europe", "Sri Lanka", "China", "Philippines", "Bangladesh", "Middle East", "South Korea", "UK", "US", "Latin America"],
+      varieties: ["Indian Red Dry Chilly", "Cumin Seed", "Black Pepper", "Cinnamon", "Star Aniseed"],
+      specifications: ["As per Buyer's Requirement", "Best Quality and Affordable Price", "Require Quality and Affordable Price"],
     },
     {
       id: "tiles",
@@ -86,14 +123,13 @@ export default function ProductsPage() {
       category: "Building Materials",
       description: "Ceramic and porcelain tiles for residential and commercial applications",
       image: "/tiles.jpg",
-      origin: ["India"],
-      destinations: ["West Africa", "Middle East", "SouthEast Asia"],
-      varieties: ["Floor Tiles", "Wall Tiles", "Vitrified Tiles", "Porcelain Tiles"],
+      origin: ["Morbi, India"],
+      destinations: ["Worldwide"],
+      varieties: ["Porcelain tiles", "Ceramic Tiles", "Vitrified Tiles", "Wall tiles", "Outdoor Tiles", "Other varieties"],
       specifications: [
-        "Sizes: 300x300mm to 800x800mm",
-        "Thickness: 8-12mm",
-        "Water absorption: <0.5%",
-        "Slip resistance: R9-R11",
+        "Good Quality",
+        "Wide range of Designs",
+        "Competitive Price",
       ],
     },
     {
@@ -229,76 +265,116 @@ export default function ProductsPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               {filteredProducts.map((product) => (
                 <div
+                  id={`product-${product.id}`}
                   key={product.id}
-                  className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow relative"
+                  className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow relative scroll-mt-20"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2 h-[400px] overflow-hidden">
+                  <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-[400px] overflow-hidden">
                     {/* Product Image */}
-                    <div className="relative h-full">
+                    <div className="relative h-48 md:h-full">
                       <img
                         src={product.image || "/placeholder.svg"}
                         alt={product.name}
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1 bg-accent text-accent-foreground text-sm font-medium rounded-full">
+                        <span className="px-3 py-1 bg-accent text-accent-foreground text-xs md:text-sm font-medium rounded-full">
                           {product.category}
                         </span>
                       </div>
                     </div>
 
-                    {/* Product Details */}
-                    <div className="p-6 flex flex-col h-full">
-                      <h3 className="text-2xl font-serif font-bold mb-3">{product.name}</h3>
-                      <p className="text-sm text-muted mb-5 leading-relaxed h-[3rem] overflow-hidden">{product.description}</p>
-
-                      {/* Origin & Destinations */}
-                      <div className="mb-5 space-y-2.5">
-                        <div className="flex items-start gap-2">
-                          <MapPin size={16} className="mt-1 flex-shrink-0 text-primary" />
-                          <div>
-                            <p className="text-xs font-semibold text-foreground">Origin</p>
-                            <p className="text-xs text-muted">{product.origin.join(", ")}</p>
+                    {/* Product Details - Flex Column Layout */}
+                    <div className="flex flex-col h-auto md:h-full">
+                      {/* Fixed Header Section - Always Visible */}
+                      <div className="flex-shrink-0 px-4 md:px-6 pt-4 md:pt-6 pb-3 border-b border-border/30">
+                        <h3 className="text-xl md:text-2xl font-serif font-bold mb-2 md:mb-3">{product.name}</h3>
+                        
+                        {/* Export Info - Always Visible */}
+                        <div className="space-y-1.5 md:space-y-2">
+                          <div className="flex items-start gap-2">
+                            <MapPin size={14} className="mt-0.5 flex-shrink-0 text-primary" />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs font-semibold text-foreground">Origin</p>
+                              <p className="text-xs text-muted break-words leading-snug">{product.origin.join(", ")}</p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <Package size={16} className="mt-1 flex-shrink-0 text-primary" />
-                          <div>
-                            <p className="text-xs font-semibold text-foreground">Export To</p>
-                            <p className="text-xs text-muted">{product.destinations.join(", ")}</p>
+                          <div className="flex items-start gap-2">
+                            <Package size={14} className="mt-0.5 flex-shrink-0 text-primary" />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs font-semibold text-foreground">Export To</p>
+                              <p className="text-xs text-muted break-words leading-snug">{product.destinations.join(", ")}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
 
-                      {/* Varieties */}
-                      <div className="mb-5 h-[3.5rem]">
-                        <p className="text-xs font-semibold mb-2">Available Varieties</p>
-                        <div className="flex flex-wrap gap-1">
-                          {product.varieties.slice(0, 4).map((variety) => (
-                            <span key={variety} className="text-xs px-2 py-1 bg-secondary rounded">
-                              {variety}
-                            </span>
-                          ))}
-                          {product.varieties.length > 4 && (
-                            <span className="text-xs px-2 py-1 bg-secondary rounded">
-                              +{product.varieties.length - 4} more
-                            </span>
-                          )}
+                      {/* Footer - Varieties & CTA */}
+                      <div className="flex-shrink-0 bg-white border-t border-border px-4 md:px-6 py-3 md:py-4">
+                        {/* Varieties - Compact Display */}
+                        <div className="mb-2 md:mb-3">
+                          <p className="text-xs font-semibold mb-2">Available Varieties ({product.varieties.length})</p>
+                          <div className="flex flex-wrap gap-1">
+                            {product.varieties.slice(0, 2).map((variety, idx) => (
+                              <span key={idx} className="text-xs px-2 py-1 bg-secondary rounded break-words max-w-full">
+                                {variety.length > 30 ? `${variety.substring(0, 27)}...` : variety}
+                              </span>
+                            ))}
+                            {product.varieties.length > 2 && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setExpandedVarieties((prev) => ({ ...prev, [product.id]: !prev[product.id] }))
+                                }}
+                                className="text-xs px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 active:bg-primary/30 rounded font-semibold transition-colors touch-manipulation"
+                              >
+                                {expandedVarieties[product.id] ? "Show Less" : `View All (${product.varieties.length})`}
+                              </button>
+                            )}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* CTA */}
-                      <div className="mt-auto pt-2">
-                        <a
-                          href="/contact"
-                          className="inline-flex items-center text-sm font-medium text-primary hover:text-accent transition-colors"
-                        >
-                          Request Quote
-                          <ArrowRight size={16} className="ml-1" />
-                        </a>
+                        {/* CTA */}
+                        <div className="pt-2 border-t border-border/50">
+                          <a
+                            href="/contact"
+                            className="inline-flex items-center text-sm font-medium text-primary hover:text-accent active:text-accent transition-colors touch-manipulation min-h-[44px] py-2"
+                          >
+                            Request Quote
+                            <ArrowRight size={16} className="ml-1" />
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
+
+                  {/* Expandable Varieties */}
+                  {expandedVarieties[product.id] && (
+                    <>
+                      {/* Backdrop to close on outside click */}
+                      <div
+                        className="fixed inset-0 z-40 bg-black/20"
+                        onClick={() => setExpandedVarieties((prev) => ({ ...prev, [product.id]: false }))}
+                      />
+                      {/* Varieties Panel */}
+                      <div className="absolute top-full left-0 right-0 bg-white border-y-2 border-primary shadow-xl z-50 mt-0 max-h-[60vh] overflow-y-auto">
+                        <div className="px-4 md:px-6 py-4 md:py-6 bg-secondary/30">
+                          <h4 className="text-sm font-semibold mb-3 md:mb-4 text-foreground">All Available Varieties</h4>
+                          <div className="grid grid-cols-1 gap-2">
+                            {product.varieties.map((variety, index) => (
+                              <div
+                                key={index}
+                                className="flex items-start gap-2 text-xs md:text-sm bg-white px-3 py-2 rounded"
+                              >
+                                <CheckCircle size={16} className="mt-0.5 flex-shrink-0 text-primary" />
+                                <span className="text-muted">{variety}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
 
                   {/* Expandable Specifications */}
                   <div className="border-t border-border relative z-10">
@@ -307,7 +383,7 @@ export default function ProductsPage() {
                         e.stopPropagation()
                         setExpandedSpecs((prev) => ({ ...prev, [product.id]: !prev[product.id] }))
                       }}
-                      className="w-full px-6 py-4 cursor-pointer hover:bg-secondary/50 transition-colors font-medium text-sm text-left flex items-center justify-between"
+                      className="w-full px-4 md:px-6 py-3 md:py-4 cursor-pointer hover:bg-secondary/50 active:bg-secondary/70 transition-colors font-medium text-sm text-left flex items-center justify-between touch-manipulation"
                     >
                       <span>View Specifications</span>
                       <span className={`transform transition-transform duration-200 ${expandedSpecs[product.id] ? "rotate-180" : ""}`}>
@@ -318,15 +394,15 @@ export default function ProductsPage() {
                       <>
                         {/* Backdrop to close on outside click */}
                         <div
-                          className="fixed inset-0 z-40"
+                          className="fixed inset-0 z-40 bg-black/20"
                           onClick={() => setExpandedSpecs((prev) => ({ ...prev, [product.id]: false }))}
                         />
                         {/* Specifications Panel */}
-                        <div className="absolute top-full left-0 right-0 bg-white border-t-2 border-primary shadow-xl z-50 mt-1 rounded-b-lg overflow-hidden">
-                          <div className="px-6 py-6 bg-secondary/30">
+                        <div className="absolute top-full left-0 right-0 bg-white border-t-2 border-primary shadow-xl z-50 mt-1 rounded-b-lg overflow-hidden max-h-[60vh] overflow-y-auto">
+                          <div className="px-4 md:px-6 py-4 md:py-6 bg-secondary/30">
                             <ul className="space-y-2">
                               {product.specifications.map((spec, index) => (
-                                <li key={index} className="flex items-start gap-2 text-sm">
+                                <li key={index} className="flex items-start gap-2 text-xs md:text-sm">
                                   <CheckCircle size={16} className="mt-0.5 flex-shrink-0 text-primary" />
                                   <span className="text-muted">{spec}</span>
                                 </li>

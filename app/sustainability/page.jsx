@@ -89,15 +89,16 @@ export default function SustainabilityPage() {
       <Header />
       <main className="pt-28">
         {/* Hero Section */}
-        <section className="relative py-32 bg-primary text-primary-foreground overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
+        <section className="relative py-32 text-primary-foreground overflow-hidden">
+          <div className="absolute inset-0">
             <img
-              src="/placeholder.svg?height=600&width=1200"
+              src="/sustainability.jpg?height=600&width=1200"
               alt="Sustainable farming"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="relative container text-center">
+          <div className="absolute inset-0 bg-primary/30" />
+          <div className="relative container text-center z-10">
             <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-balance">Sustainability & Quality</h1>
             <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto text-balance leading-relaxed">
               Building a sustainable future through responsible practices and unwavering commitment to quality

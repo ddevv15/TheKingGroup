@@ -309,10 +309,10 @@ export default function ContactPage() {
                       <div>
                         <p className="text-sm font-medium mb-1">General Inquiries</p>
                         <a
-                          href="mailto:info@thekinggroup.com"
+                          href="mailto:info@thekinggroup.in"
                           className="text-sm text-primary-foreground/90 hover:text-accent transition-colors"
                         >
-                          info@thekinggroup.com
+                          info@thekinggroup.in
                         </a>
                       </div>
                     </div>
@@ -348,7 +348,7 @@ export default function ContactPage() {
                     Need a detailed quote for bulk orders? Our sales team will provide competitive pricing and delivery
                     timelines.
                   </p>
-                  <a href="mailto:sales@thekinggroup.com" className="text-sm font-medium underline hover:no-underline">
+                  <a href="mailto:cmo@thekinggroup.in" className="text-sm font-medium underline hover:no-underline">
                     cmo@thekinggroup.in
                   </a>
                 </div>
@@ -362,7 +362,7 @@ export default function ContactPage() {
                     Request product specifications, certificates, or compliance documents.
                   </p>
                   <a
-                    href="mailto:docs@thekinggroup.com"
+                    href="mailto:info@thekinggroup.in"
                     className="text-sm font-medium text-primary hover:text-accent transition-colors"
                   >
                     info@thekinggroup.in

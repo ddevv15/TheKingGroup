@@ -358,7 +358,9 @@ const CardNav = ({
     >
       <nav
         ref={navRef}
-        className="card-nav w-full bg-transparent"
+        className={`card-nav w-full bg-transparent md:bg-transparent ${
+          isHamburgerOpen ? "backdrop-blur-md bg-white/90" : ""
+        }`}
       >
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
@@ -373,7 +375,7 @@ const CardNav = ({
               <span
                 id="navbar-brand-the-king-group"
                 className="text-xl md:text-2xl font-bold"
-                style={{ color: menuColor || "#1e3a5f", fontFamily: "DM Serif Display, Georgia, serif" }}
+                style={{ color: "#ffffff", fontFamily: "DM Serif Display, Georgia, serif" }}
               >
                 {logoAlt}
               </span>
@@ -392,7 +394,7 @@ const CardNav = ({
                 >
                   <button
                     className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-primary/20 pointer-events-auto"
-                    style={{ color: menuColor || "#1e3a5f" }}
+                    style={{ color: "#ffffff" }}
                   >
                     {menu.label}
                     <ChevronDown
@@ -482,7 +484,7 @@ const CardNav = ({
                       toggleDropdown(key)
                     }}
                     className="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/30"
-                    style={{ color: menuColor || "#1e3a5f" }}
+                    style={{ color: "#ffffff" }}
                   >
                     {menu.label}
                     <ChevronDown

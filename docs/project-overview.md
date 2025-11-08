@@ -1,8 +1,8 @@
 # The King Group - Project Overview
 
-> **Last Updated:** October 30, 2025  
+> **Last Updated:** November 7, 2025  
 > **Project Type:** Corporate Website for Global Agri-Export Business  
-> **Status:** MVP Complete with Static Content
+> **Status:** MVP In Development - Static Content, Interactive Map Removed
 
 ---
 
@@ -111,23 +111,36 @@ TheKingGroup/
 │   ├── page.jsx                 # Homepage
 │   └── globals.css              # Global styles & fonts
 ├── components/                   # Reusable components
-│   ├── ui/                      # Radix UI component wrappers
-│   ├── card-nav.jsx             # Animated navigation
+│   ├── ui/                      # Radix UI component wrappers (57 files)
+│   ├── card-nav.jsx             # Animated navigation with GSAP
+│   ├── client-error-boundary.jsx # Client-side error boundary wrapper
+│   ├── error-boundary.jsx       # Error boundary component
 │   ├── feedback-button.jsx      # Floating feedback button
 │   ├── feedback-form.jsx        # Feedback form with Supabase
 │   ├── footer.jsx               # Site footer
-│   └── header.jsx               # Site header
+│   ├── header.jsx               # Site header
+│   └── theme-provider.tsx       # Theme context provider
+├── data/                        # Data directory (empty - ready for new data)
+├── hooks/                       # Custom React hooks
+│   ├── use-mobile.ts           # Mobile detection hook
+│   └── use-toast.ts            # Toast notification hook
 ├── lib/                         # Utilities
 │   ├── supabase.js             # Supabase client
 │   └── utils.ts                # Tailwind utilities
 ├── public/                      # Static assets
-│   ├── fonts/                  # Custom font files
-│   └── [images]                # Product & team images
+│   ├── fonts/                  # Custom font files (DM Serif, Raleway, Source Sans 3)
+│   ├── worldmap.png            # World map image (not integrated)
+│   ├── hero_bg.mp4             # Hero background video (Git LFS)
+│   └── [images]                # Product & team images (86 files total)
 ├── docs/                        # Documentation
 │   ├── activity.md             # Development activity log
-│   └── project-overview.md     # This document
-└── scripts/                     # Database scripts
-    └── create-feedback-table.sql
+│   ├── project-overview.md     # This document
+│   ├── project-content-guide.md # Content replacement guide
+│   └── video-hosting-solutions.md # Video hosting documentation
+├── scripts/                     # Database scripts
+│   └── create-feedback-table.sql
+└── styles/                      # Legacy styles directory
+    └── globals.css
 ```
 
 ### Page Routes
@@ -152,19 +165,28 @@ TheKingGroup/
 **Purpose:** Primary landing page showcasing company overview
 
 **Sections:**
-- **Hero Section:** Full-screen hero with agricultural field image, tagline, and CTA
+- **Hero Section:** Full-screen hero with video background (`hero_bg.mp4`), tagline, and CTA
 - **Mission Statement:** Company introduction and value proposition
-- **Products Grid:** 8 product cards with images and descriptions
-  - Rice, Cashew, Cotton, Oilseeds, Spices, Tiles, Pharma, Supermarket Products
-- **Global Reach Preview:** 4 regions with country counts (Africa, Middle East, Europe, Americas)
+- **Products Carousel:** 11 products with carousel navigation (4 visible at a time)
+  - Rice, Cashew, Cotton, Oilseeds, Spices, Tiles, Pharma, Supermarket Products, Edible Oil, Castor Oil, Pulses
+  - Left/Right navigation buttons
+  - Carousel indicators (dots)
+- **Global Reach Section:** 
+  - Section header with placeholder for map component
+  - "View Full Map" button linking to `/global-presence`
+  - Background: White tiles image
 - **Values Section:** 4 core values with icons (Quality Assurance, Global Network, Sustainability, Reliable Supply)
-- **CTA Section:** Partnership call-to-action
+  - Background: White tiles image (shared with Global Reach)
+- **CTA Section:** Partnership call-to-action with tiles background image
 
 **Key Features:**
+- Video background with autoplay and loop
+- Interactive product carousel
+- GPU-optimized animations (`.gpu-accelerated`, `.gpu-scale-hover`, `.gpu-lift-hover` CSS classes)
 - Responsive grid layouts
 - Hover animations on product cards
+- White tiles background for multiple sections
 - Smooth transitions
-- Optimized images
 
 ---
 
@@ -224,23 +246,38 @@ TheKingGroup/
 **Purpose:** Comprehensive product catalog with detailed specifications
 
 **Features:**
-- **Category Filter:** Sticky filter bar with 9 categories
+- **Category Filter:** Fixed position filter bar with 9 categories (scrolls with page - not sticky)
   - All, Grains, Nuts, Fibers, Seeds, Spices, Building Materials, Healthcare, FMCG
-- **Product Cards:** 8 detailed product entries
+- **Product Cards:** 11 detailed product entries with uniform height (400px)
   - Product image with category badge
-  - Description and origin countries
-  - Export destinations
-  - Available varieties (with overflow indicator)
-  - Expandable specifications section
+  - Description and origin countries (fixed height containers)
+  - Export destinations (regional: West Africa, Middle East, Europe, SouthEast Asia, South Asia)
+  - Available varieties (fixed height with overflow handling)
+  - Expandable specifications section (absolute positioned dropdown)
   - "Request Quote" CTA
+- **Uniform Card Heights:** All cards are exactly 400px tall for consistent grid layout
+- **State-Controlled Specifications:** React state manages expanded/collapsed specs per product
+
+**Products:**
+1. Rice (Grains)
+2. Cashew (Nuts)
+3. Cotton (Fibers)
+4. Oilseeds (Seeds)
+5. Spices (Spices)
+6. Tiles (Building Materials)
+7. Pharmaceutical Products (Healthcare)
+8. Supermarket Products (FMCG)
+9. Edible Oil (FMCG)
+10. Castor Oil (FMCG)
+11. Pulses (Grains)
 
 **Product Details:**
 Each product includes:
 - Name, category, description
 - Origin countries
-- Destination regions
+- Destination regions (updated to match new regional structure)
 - Varieties (4+ per product)
-- Technical specifications
+- Technical specifications (expandable dropdown)
 - Quality parameters
 
 **Services Section:**
@@ -260,25 +297,28 @@ Each product includes:
   - 6 Global Offices
   - 50K+ Tons Exported Annually
 
-- **Regional Breakdown:** 4 regions with detailed stats
-  - Africa: 15 countries, 120+ partners, 45% volume, +18% growth
+- **Regional Breakdown:** 5 regions with detailed stats
+  - West Africa: 15 countries, 120+ partners, 45% volume, +18% growth
   - Middle East: 8 countries, 65+ partners, 30% volume, +22% growth
   - Europe: 12 countries, 45+ partners, 15% volume, +12% growth
-  - Americas: 6 countries, 30+ partners, 10% volume, +25% growth
+  - SouthEast Asia: 6 countries, 40+ partners, 8% volume, +20% growth
+  - South Asia: 6 countries, 260+ partners, 35% volume, +15% growth
 
 - **Office Locations:** 6 offices worldwide
-  - Mumbai, India (Headquarters)
+  - Vijapur, India (Headquarters) - Gujarat
   - Ho Chi Minh City, Vietnam
-  - Bangkok, Thailand
   - Dubai, UAE
-  - Lagos, Nigeria
-  - Nairobi, Kenya
+  - Accra, Ghana (West Africa)
+  - Dar es Salaam, Tanzania (East Africa)
+  - Sydney, Australia
 
 **Each Office Includes:**
 - Address, phone, email
 - Business hours with timezone
 - Office type (Headquarters/Regional/Representative)
 - Description of operations
+
+**Note:** Interactive world map removed as of November 7, 2025. Ready for fresh implementation.
 
 ---
 
@@ -1079,12 +1119,45 @@ Transform the static prototype into a production-ready website with real, accura
 | Date | Version | Changes | Author |
 |------|---------|---------|--------|
 | 2025-10-30 | 1.0 | Initial project overview document created | AI Assistant |
+| 2025-11-07 | 1.1 | Updated to reflect current state: interactive world map removed, product catalog expanded to 11 products, regional structure updated, Git LFS video integration documented, GPU optimization classes added, directory structure corrected | AI Assistant |
+
+---
+
+## Recent Changes (November 7, 2025)
+
+### Removed Components
+- **Interactive World Map Integration:** All map-related components removed for fresh reimplementation
+  - Removed: `components/global-reach-map.jsx`
+  - Removed: `components/global-reach-map.module.css`
+  - Removed: `components/office-marker.jsx`
+  - Removed: `components/office-tooltip.jsx`
+  - Removed: `data/offices.js`
+- Homepage Global Reach section now has placeholder comment for future map implementation
+
+### Updated Features
+- **Product Catalog:** Expanded from 8 to 11 products
+  - Added: Edible Oil, Castor Oil, Pulses
+  - Product images updated to match homepage
+- **Regional Structure:** Updated from 4 to 5 regions
+  - Changed: "Africa" → "West Africa"
+  - Added: "SouthEast Asia" (6 countries)
+  - Added: "South Asia" (6 countries)
+  - Removed: "Americas", "Oceania"
+- **Homepage Hero:** Video background (`hero_bg.mp4`) via Git LFS
+- **GPU Optimization:** Custom CSS utility classes for hardware acceleration
+- **Products Carousel:** Interactive carousel showing 4 products at a time with navigation
+
+### Technical Updates
+- Git LFS configured for large video files (`*.mp4`)
+- Build system verified and working
+- All linter errors resolved
+- Data directory now empty (ready for new data structures)
 
 ---
 
 **Document Status:** Living Document - Update as project evolves
 
-**Last Review Date:** October 30, 2025
+**Last Review Date:** November 7, 2025
 
-**Next Review Date:** November 30, 2025
+**Next Review Date:** December 7, 2025
 

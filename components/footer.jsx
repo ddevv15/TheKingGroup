@@ -22,7 +22,7 @@ export default function Footer() {
     { name: "Contact", href: "/contact" },
   ]
 
-  const regions = ["West Africa", "Middle East", "Europe", "SouthEast Asia", "South Asia"]
+  const regions = ["West Africa", "Middle East", "Europe", "SouthEast Asia", "South Asia", "Americas", "Australia"]
 
   return (
     <footer className="bg-primary text-primary-foreground">
@@ -32,9 +32,7 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-serif font-bold mb-4">The King Group</h3>
             <p className="text-sm text-primary-foreground/80 mb-6 leading-relaxed">
-              Global leader in agri-export, delivering quality products from India, Vietnam, and Thailand to markets
-              worldwide.
-            </p>
+            Your trusted international agro-commodity partner across India, West Africa, Europe, and the rest of the world.            </p>
             <div className="flex gap-4">
               <a
                 href="#"

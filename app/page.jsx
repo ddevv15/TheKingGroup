@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
+import GlobalReachMap from "@/components/global-reach-map"
 import { ArrowRight, Globe, Leaf, ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function HomePage() {
@@ -242,7 +243,7 @@ export default function HomePage() {
                 A diverse portfolio of premium agricultural and consumer products
               </p>
             </div>
-            <div className="relative px-2 sm:px-4 md:px-8 lg:px-16 xl:px-20">
+            <div className="relative px-2 sm:px-4 md:px-8 lg:px-16 xl:px-20 overflow-hidden">
               {/* Navigation Buttons */}
               <button
                 onClick={handlePrevious}
@@ -266,7 +267,7 @@ export default function HomePage() {
               </button>
 
               {/* Products Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-4 lg:px-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 px-14 sm:px-6 md:px-4 lg:px-6">
                 {visibleProducts.map((product) => (
                   <div
                     key={product.name}
@@ -300,13 +301,15 @@ export default function HomePage() {
               </div>
 
               {/* Carousel Indicators */}
-              <div className="flex justify-center gap-2 mt-6 sm:mt-8">
+              <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8 px-2">
                 {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentProductIndex(index)}
-                    className={`h-2 sm:h-2.5 rounded-full transition-all duration-200 gpu-accelerated touch-manipulation min-w-[44px] ${
-                      index === currentProductIndex ? "bg-primary w-8 sm:w-10" : "bg-muted w-2 sm:w-2.5 hover:bg-primary/50"
+                    className={`h-2 sm:h-2.5 rounded-full transition-all duration-200 gpu-accelerated touch-manipulation ${
+                      index === currentProductIndex 
+                        ? "bg-primary w-8 sm:w-10" 
+                        : "bg-muted w-2 sm:w-2.5 hover:bg-primary/50"
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -316,7 +319,31 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Global Reach & Why Choose Combined Section */}
+        {/* Global Reach Section */}
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50">
+          <div className="container px-4 sm:px-6">
+            <div className="text-center mb-10 sm:mb-12 md:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">Global Reach</h2>
+              <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed px-2">
+                Serving markets across four continents with reliable supply chains
+              </p>
+            </div>
+          </div>
+          <GlobalReachMap />
+          <div className="container px-4 sm:px-6">
+            <div className="text-center mt-8">
+              <a
+                href="/global-presence"
+                className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground font-semibold text-base sm:text-lg rounded-lg shadow-lg focus:ring-4 focus:ring-primary/50 gpu-scale-hover min-h-[44px] touch-manipulation"
+              >
+                View Full Map
+                <ArrowRight size={18} className="sm:w-5 sm:h-5 ml-2 sm:ml-3" />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Choose The King Group Section */}
         <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
           <img
             src="/white_tiles.jpg"
@@ -326,27 +353,6 @@ export default function HomePage() {
             className="absolute inset-0 w-full h-full object-cover z-0 gpu-accelerated"
           />
           <div className="relative z-10 container px-4 sm:px-6">
-            {/* Global Reach Section */}
-            <div className="mb-12 sm:mb-16 md:mb-20 lg:mb-24">
-              <div className="text-center mb-10 sm:mb-12 md:mb-16">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">Global Reach</h2>
-                <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed px-2">
-                  Serving markets across four continents with reliable supply chains
-                </p>
-              </div>
-              {/* Map component will be added here */}
-              <div className="text-center">
-                <a
-                  href="/global-presence"
-                  className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground font-semibold text-base sm:text-lg rounded-lg shadow-lg focus:ring-4 focus:ring-primary/50 gpu-scale-hover min-h-[44px] touch-manipulation"
-                >
-                  View Full Map
-                  <ArrowRight size={18} className="sm:w-5 sm:h-5 ml-2 sm:ml-3" />
-                </a>
-              </div>
-            </div>
-
-            {/* Why Choose The King Group Section */}
             <div>
               <div className="text-center mb-10 sm:mb-12 md:mb-16">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">Why Choose The King Group</h2>

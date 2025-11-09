@@ -2009,3 +2009,347 @@
   - Desktop layout remains exactly as before (on point as user specified)
   - Consistent spacing and sizing across all breakpoints
   - Better user experience on mobile devices with proper touch targets
+
+## 2025-11-08 (Integrate Interactive Global Reach Map on Homepage)
+
+- Prompt: "now I have to integrate the global map feature in my global reach section in the home page"
+
+- Actions:
+  
+  **Phase 1: Office Data Creation**
+  - Created `data/offices.js` with The King Group's 6 actual office locations:
+    - Headquarters: Gujarat, India (South Asia)
+    - Vietnam Office: Ho Chi Minh City, Vietnam (SouthEast Asia)
+    - UAE Office: Dubai, UAE (Middle East)
+    - Ghana Office: Accra, Ghana (West Africa)
+    - Tanzania Office: Dar es Salaam, Tanzania (West Africa)
+    - Australia Office: Sydney, Australia (Asia Pacific)
+  - Calculated accurate lat/lng percentages based on geographic coordinates
+  - Added real metrics: partners count, volume (MT), growth percentages
+  - Included office descriptions and regional classifications
+  
+  **Phase 2: Component Conversion (TypeScript to JavaScript)**
+  - Created `components/office-marker.jsx`:
+    - Converted from TypeScript, removed type annotations
+    - Implemented golden dot markers with pulse animation
+    - Selected state shows navy blue with larger pulse
+    - Mobile markers are larger (20px vs 16px) for touch
+    - Full keyboard navigation support (Enter, Space keys)
+    - ARIA labels for screen reader accessibility
+    - Used Tailwind classes instead of CSS Modules
+  
+  - Created `components/office-tooltip.jsx`:
+    - Converted from TypeScript to JavaScript
+    - Smart positioning logic (left/right/above/below based on marker location)
+    - Mobile: Full-width modal at bottom of screen with backdrop
+    - Desktop: Floating tooltip near marker with arrow indicator
+    - Displays: office name, badge, location, stats grid, description, region
+    - Focus trap for accessibility on mobile
+    - Click-outside-to-close functionality
+    - Styled with Tailwind utility classes
+  
+  - Created `components/global-reach-map.jsx`:
+    - Converted from TypeScript to JavaScript
+    - Uses local `/public/worldmap.png` image instead of external URL
+    - Regular `<img>` tag instead of Next.js Image component
+    - State management for selected office, mobile detection, dimensions
+    - Keyboard support: Escape key closes tooltips
+    - Click outside map closes tooltips
+    - Responsive mobile/desktop modes
+    - Loading state with opacity transition
+    - Map uses mix-blend-mode: multiply to blend with white tiles background
+  
+  **Phase 3: Homepage Integration**
+  - Modified `app/page.jsx`:
+    - Added GlobalReachMap import
+    - Replaced placeholder comment with `<GlobalReachMap />` component
+    - Added mt-8 margin to "View Full Map" button for proper spacing
+    - Component integrates seamlessly with existing white tiles background section
+  
+- Technical Implementation:
+  
+  **Coordinate System:**
+  - Lat/lng stored as percentages (0-100) relative to map image dimensions
+  - Formula used: lng% = (longitude + 180) / 360 * 100
+  - Formula used: lat% = (90 - latitude) / 180 * 100
+  - Accurate positioning based on real geographic coordinates
+  
+  **Styling Approach:**
+  - Converted all CSS Modules to Tailwind utility classes
+  - Color scheme: primary (#1e3a5f navy), accent (#d4af37 gold)
+  - Markers: Golden with pulse animation, navy when selected
+  - Tooltips: White background, gray borders, shadow-xl
+  - Map image: mix-blend-multiply for seamless background integration
+  
+  **Accessibility Features:**
+  - Full keyboard navigation (Tab, Enter, Space, Escape)
+  - ARIA labels on all interactive elements
+  - Focus trap in mobile tooltips
+  - Screen reader friendly announcements
+  - Touch targets meet WCAG 44x44px minimum
+  - Proper focus-visible states
+  
+  **Responsive Design:**
+  - Desktop: Floating tooltips with smart positioning
+  - Mobile: Full-width bottom modals with backdrop
+  - Markers scale appropriately (16px desktop, 20px mobile)
+  - Map maintains aspect ratio (1603:742) across all screen sizes
+  - Touch-optimized interactions on mobile
+  
+- Files Created:
+  - `data/offices.js` - Office location data with coordinates
+  - `components/office-marker.jsx` - Interactive marker component
+  - `components/office-tooltip.jsx` - Tooltip/modal component
+  - `components/global-reach-map.jsx` - Main map component
+  
+- Files Modified:
+  - `app/page.jsx` - Added import and component usage
+  - `docs/activity.md` - Documentation
+  
+- Notes:
+  - Map successfully integrates with existing homepage layout
+  - All 6 office locations are clickable and display detailed information
+  - Smooth animations and transitions throughout
+  - Fully accessible with keyboard and screen reader support
+  - Mobile and desktop experiences optimized independently
+  - Map blends seamlessly with white tiles background
+  - No linter errors in any created or modified files
+  - Ready for production deployment
+
+## 2025-11-08 (Redesign Map Integration - Full Width Primary Element)
+
+- Prompt: "remove the white bg from the map, the worldmap.png is transparent use the existing tiles bg" and "The map should be the PRIMARY visual element... also i want the map to cover the whole width of the section"
+
+- Problem Identified:
+  - Map appeared as floating overlay card on marble background
+  - Disconnected "pasted on" appearance with rounded corners and shadow
+  - Limited width (max-w-6xl) didn't utilize full section
+  - Competing marble texture behind map created visual clutter
+  - Card-like styling made it look like separate layer
+
+- Actions:
+
+  **Split Combined Section** (`app/page.jsx`):
+  - Separated Global Reach and Why Choose into two distinct sections
+  - Global Reach section: Clean bg-gray-50 background, no tiles image
+  - Why Choose section: Kept original tiles background
+  - Removed competing background texture from behind map
+  
+  **Restructured Global Reach Section** (`app/page.jsx`):
+  - New structure: heading (in container) → full-width map → button (in container)
+  - Heading and subtitle: Wrapped in container with px-4 sm:px-6
+  - Map: Placed outside container for full-width span
+  - Button: Wrapped in container with mt-8 spacing
+  - Clean bg-gray-50 provides subtle background without competition
+  
+  **Made Map Full Width** (`components/global-reach-map.jsx`):
+  - Removed max-w-6xl constraint → changed to w-full
+  - Removed rounded-lg (no rounded corners)
+  - Removed shadow-lg (no card shadow)
+  - Removed overflow-hidden
+  - Map now spans full section width edge-to-edge
+  
+  **Simplified Map Styling** (`components/global-reach-map.jsx`):
+  - Removed mix-blend-multiply (no longer needed without tiles bg)
+  - Removed opacity-90 (full opacity for better visibility)
+  - Kept object-contain for proper aspect ratio
+  - Map image now displays cleanly on light background
+
+- Visual Hierarchy Changes:
+
+  **Before:**
+  ```
+  [Tiles Background Everywhere]
+    [Container]
+      [Heading]
+      [Map Card - rounded, shadowed, max-width] ← floating overlay
+      [Button]
+    [Why Choose Content]
+  ```
+
+  **After:**
+  ```
+  [Global Reach Section - Clean Background]
+    [Container: Heading]
+    [Full-Width Map] ← PRIMARY integrated element
+    [Container: Button]
+  
+  [Why Choose Section - Tiles Background]
+    [Container: Content]
+  ```
+
+- Results:
+  - Map is now the dominant visual element
+  - No competing backgrounds or textures
+  - Full-width presentation is more impactful
+  - Integrated, natural appearance instead of floating card
+  - Better visual hierarchy with map as primary focus
+  - Clean separation between sections
+  - Professional, modern design
+
+- Files Modified:
+  - `app/page.jsx` - Split sections, restructured layout
+  - `components/global-reach-map.jsx` - Full width, removed card styling
+  - `docs/activity.md` - Documentation
+
+- Notes:
+  - Map now feels integrated rather than overlaid
+  - Full-width design maximizes visual impact
+  - Clean background prevents visual competition
+  - Better user experience with clear focal point
+  - Ready for additional refinements per user request
+
+## 2025-11-08 (Optimize Global Reach Map for All Screen Sizes)
+
+- Prompt: "optimize the global reach section for all the screens(Desktop Mobile and tablets) current implementation is only for desktop" and "for mobile screens the pop up should be different a central pop up from below or something similar to that"
+
+- Problem Identified:
+  - Only basic mobile detection (< 768px) existed
+  - No tablet-specific optimizations (768px-1024px)
+  - Mobile tooltip was basic, not optimized as modal
+  - Tooltip positioning didn't account for tablet sizes
+  - Markers were same size across all devices
+
+- Actions:
+
+  **Enhanced Screen Size Detection** (`components/global-reach-map.jsx`):
+  - Replaced simple `isMobile` boolean with `screenSize` state ('mobile', 'tablet', 'desktop')
+  - Mobile: < 768px
+  - Tablet: 768px - 1023px
+  - Desktop: ≥ 1024px
+  - Added proper breakpoint detection with resize listeners
+  
+  **Optimized Marker Sizes** (`components/office-marker.jsx`):
+  - Mobile: 32px (w-8 h-8) - larger for touch
+  - Tablet: 28px (w-7 h-7) - medium size
+  - Desktop: 24px (w-6 h-6) - compact for precision
+  - All sizes maintain proper touch targets (WCAG compliant)
+  
+  **Redesigned Mobile Tooltip** (`components/office-tooltip.jsx`):
+  - **Fixed bottom modal** with rounded top corners (rounded-t-2xl)
+  - **Handle bar** at top for visual affordance
+  - **Full-width** (inset-x-0) centered modal
+  - **Body scroll lock** when modal is open (prevents background scrolling)
+  - **Slide-up animation** (slide-in-from-bottom) with smooth easing
+  - **Larger touch targets** (8px buttons, better spacing)
+  - **Improved typography** (larger text, better hierarchy)
+  - **Enhanced stats grid** (more padding, rounded corners)
+  - **Focus trap** for keyboard navigation
+  - **Escape key support** to close modal
+  
+  **Tablet Tooltip Optimizations** (`components/office-tooltip.jsx`):
+  - **Centered modal** at bottom (2rem from bottom)
+  - **Wider width** (75% of container, max 500px)
+  - **Modal behavior** with backdrop overlay
+  - **Better padding** (p-5 vs p-6 desktop)
+  - **Scrollable content** with max-height constraints
+  
+  **Desktop Tooltip Maintained** (`components/office-tooltip.jsx`):
+  - **Floating tooltip** near markers (smart positioning)
+  - **320px width** (increased from 280px for better readability)
+  - **Left/right positioning** based on marker location
+  - **No backdrop** (clean floating appearance)
+  
+  **Backdrop Overlays** (`components/global-reach-map.jsx`):
+  - Mobile: Full backdrop with click-to-close
+  - Tablet: Full backdrop with click-to-close
+  - Desktop: No backdrop (tooltip floats naturally)
+
+- Responsive Features:
+
+  **Mobile (< 768px):**
+  - Full-width bottom modal with handle bar
+  - Body scroll lock when modal open
+  - Larger markers (32px) for easy tapping
+  - Touch-optimized buttons and spacing
+  - Slide-up animation from bottom
+  - Escape key to close
+  - Focus trap for accessibility
+  
+  **Tablet (768px - 1023px):**
+  - Centered modal at bottom (2rem spacing)
+  - Wider tooltip (75% width, max 500px)
+  - Medium markers (28px)
+  - Backdrop overlay for modal feel
+  - Scrollable content if needed
+  
+  **Desktop (≥ 1024px):**
+  - Floating tooltip near markers
+  - Smart positioning (left/right based on marker)
+  - Compact markers (24px)
+  - No backdrop (clean floating appearance)
+  - 320px tooltip width
+
+- Technical Improvements:
+  - Proper SSR guards (typeof window/document checks)
+  - Body scroll lock restoration on unmount
+  - Escape key handler for mobile/tablet modals
+  - Focus trap with Tab key cycling
+  - Proper z-index layering (backdrop z-40, modal z-50)
+  - Smooth animations (300ms ease-out)
+  - Touch manipulation optimizations
+
+- Files Modified:
+  - `components/global-reach-map.jsx` - Enhanced screen size detection, tablet support
+  - `components/office-marker.jsx` - Responsive marker sizes
+  - `components/office-tooltip.jsx` - Complete mobile/tablet/desktop redesign
+  - `docs/activity.md` - Documentation
+
+- Notes:
+  - Mobile experience now feels native with bottom sheet modal
+  - Tablet experience bridges mobile and desktop appropriately
+  - Desktop maintains clean floating tooltip design
+  - All screen sizes have optimized touch targets and spacing
+  - Proper accessibility features (focus trap, keyboard navigation, ARIA)
+  - Smooth animations enhance user experience
+  - Body scroll lock prevents UX issues on mobile
+  - Ready for production across all devices
+
+## 2025-11-08 (Fix Carousel Indicator Buttons Causing Width Issues on Mobile)
+
+- Prompt: "these buttons on the mobile screen result in change in the width of the whole site on mobile screens identify the bug and lets fix it"
+
+- Problem Identified:
+  - Carousel indicator buttons had `min-w-[44px]` class
+  - This forced all buttons to be at least 44px wide
+  - Inactive buttons also had `w-2` (8px width) which conflicted with `min-w-[44px]`
+  - This width conflict caused horizontal overflow on mobile screens
+  - Site width was changing due to overflow issues
+
+- Root Cause:
+  - CSS conflict: `min-w-[44px]` (44px minimum) vs `w-2` (8px width)
+  - Tailwind's min-width was overriding the width constraint
+  - This forced buttons to be wider than intended, causing layout overflow
+  - No overflow protection on carousel container
+
+- Actions:
+
+  **Fixed Indicator Buttons** (`app/page.jsx`):
+  - Removed `min-w-[44px]` class from indicator buttons
+  - Buttons now properly respect their width classes:
+    - Active: `w-8 sm:w-10` (32px mobile, 40px desktop)
+    - Inactive: `w-2 sm:w-2.5` (8px mobile, 10px desktop)
+  - Added `px-2` padding to indicators container for edge spacing
+  - Buttons maintain proper sizing without width conflicts
+
+  **Added Overflow Protection** (`app/page.jsx`):
+  - Added `overflow-hidden` to carousel container
+  - Prevents any horizontal overflow from affecting page width
+  - Ensures carousel content stays within bounds
+
+- Technical Details:
+  - Indicator buttons are visual elements, don't need 44px minimum width
+  - Primary navigation (left/right arrows) already have proper touch targets
+  - Small indicators are acceptable for secondary navigation
+  - Overflow protection prevents layout issues
+
+- Files Modified:
+  - `app/page.jsx` - Fixed indicator button widths, added overflow protection
+  - `docs/activity.md` - Documentation
+
+- Notes:
+  - Mobile width issue resolved - no more horizontal overflow
+  - Buttons now display correctly at intended sizes
+  - Site width remains stable on all screen sizes
+  - Carousel indicators work properly without layout conflicts
+  - Ready for testing on mobile devices

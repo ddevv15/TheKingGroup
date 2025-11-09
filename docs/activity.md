@@ -2353,3 +2353,45 @@
   - Site width remains stable on all screen sizes
   - Carousel indicators work properly without layout conflicts
   - Ready for testing on mobile devices
+
+## 2025-11-08 (Fix Build Error - Exclude Code Directory from TypeScript Compilation)
+
+- Prompt: "lets fix the build issues" (TypeScript error in code directory)
+
+- Problem Identified:
+  - Build was failing with TypeScript error: `'"@/data/offices"' has no exported member named 'Office'`
+  - Error in `./code/components/OfficeTooltip.tsx` trying to import `Office` type
+  - The `/code` directory is a prototype/development directory and shouldn't be part of the build
+  - TypeScript was compiling all `.ts` and `.tsx` files, including the `/code` directory
+
+- Root Cause:
+  - `tsconfig.json` was including all TypeScript files with `"**/*.ts", "**/*.tsx"`
+  - This included the `/code` directory which contains prototype TypeScript files
+  - The `/code` directory has TypeScript files that reference types that don't exist in the main project
+  - Main project uses JavaScript (.jsx) files, not TypeScript
+
+- Actions:
+
+  **Excluded Code Directory** (`tsconfig.json`):
+  - Added `"code"` to the `exclude` array in `tsconfig.json`
+  - TypeScript compiler now ignores the `/code` directory
+  - Only compiles TypeScript files in the main project (components/ui/, etc.)
+  - Build process no longer tries to compile prototype files
+
+- Build Results:
+  - ✓ Build completes successfully
+  - ✓ No TypeScript errors
+  - ✓ All pages generate correctly
+  - ✓ Static export works for GitHub Pages
+  - ✓ 12 pages generated successfully
+
+- Files Modified:
+  - `tsconfig.json` - Added "code" to exclude array
+  - `docs/activity.md` - Documentation
+
+- Notes:
+  - `/code` directory is now properly excluded from builds
+  - Main project continues to work with JavaScript files
+  - TypeScript files in `components/ui/` still compile correctly
+  - Build is ready for production deployment
+  - No impact on functionality - `/code` was never used in production

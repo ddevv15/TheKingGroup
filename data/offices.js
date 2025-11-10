@@ -1,7 +1,4 @@
 // The King Group Office Locations
-// Coordinates are stored as percentages (0-100) relative to the map image
-// Formula: lng% = (longitude + 180) / 360 * 100
-//          lat% = (90 - latitude) / 180 * 100
 
 export const offices = [
   {
@@ -9,8 +6,8 @@ export const offices = [
     name: "Headquarters",
     city: "Gujarat",
     country: "India",
-    lat: 41.5, // ~23°N latitude
-    lng: 62.5, // ~72°E longitude
+    lat: 41.5,
+    lng: 62.5,
     badge: "Headquarters",
     partners: 260,
     volume: "50,000+ MT",
@@ -24,8 +21,8 @@ export const offices = [
     name: "Vietnam Office",
     city: "Ho Chi Minh City",
     country: "Vietnam",
-    lat: 49, // ~11°N latitude
-    lng: 73, // ~107°E longitude
+    lat: 49,
+    lng: 73,
     badge: "Regional",
     partners: 145,
     volume: "15,000+ MT",
@@ -39,8 +36,8 @@ export const offices = [
     name: "UAE Office",
     city: "Dubai",
     country: "UAE",
-    lat: 44.8, // ~25°N latitude
-    lng: 57, // ~55°E longitude
+    lat: 44.8,
+    lng: 57,
     badge: "Regional",
     partners: 89,
     volume: "8,000+ MT",
@@ -54,8 +51,8 @@ export const offices = [
     name: "Ghana Office",
     city: "Accra",
     country: "Ghana",
-    lat: 49.7, // ~6°N latitude
-    lng: 40.3, // ~0°E longitude
+    lat: 49.7,
+    lng: 40.3,
     badge: "Regional",
     partners: 112,
     volume: "12,000+ MT",
@@ -69,8 +66,8 @@ export const offices = [
     name: "Tanzania Office",
     city: "Dar es Salaam",
     country: "Tanzania",
-    lat: 66, // ~7°S latitude
-    lng: 52, // ~39°E longitude
+    lat: 66,
+    lng: 52,
     badge: "Regional",
     partners: 78,
     volume: "6,500+ MT",
@@ -83,8 +80,8 @@ export const offices = [
     name: "Australia Office",
     city: "Sydney",
     country: "Australia",
-    lat: 77, // ~34°S latitude
-    lng: 85, // ~151°E longitude
+    lat: 77,
+    lng: 85,
     badge: "Regional",
     partners: 45,
     volume: "3,500+ MT",

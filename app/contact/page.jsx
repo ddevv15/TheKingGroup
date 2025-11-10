@@ -1,11 +1,19 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Mail, Phone, Clock, Send, Package, FileText, Users } from "lucide-react"
+import { getAllProducts } from "@/data/products"
 
-export default function ContactPage() {
+function ContactForm() {
+  const searchParams = useSearchParams()
+  const products = getAllProducts()
+  
+  // Get product name from ID in URL params, or use product names list
+  const productOptions = products.map((p) => p.name).concat(["Other"])
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,6 +28,17 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
+
+  // Preselect product from URL query parameter
+  useEffect(() => {
+    const productId = searchParams.get("product")
+    if (productId) {
+      const product = products.find((p) => p.id === productId)
+      if (product) {
+        setFormData((prev) => ({ ...prev, productInterest: product.name }))
+      }
+    }
+  }, [searchParams, products])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -48,18 +67,6 @@ export default function ContactPage() {
       })
     }, 1500)
   }
-
-  const products = [
-    "Rice",
-    "Cashew Nuts",
-    "Cotton",
-    "Oilseeds",
-    "Spices",
-    "Tiles",
-    "Pharmaceutical Products",
-    "Supermarket Products",
-    "Other",
-  ]
 
   const inquiryTypes = [
     "Product Information",
@@ -206,7 +213,7 @@ export default function ContactPage() {
                           className="w-full px-4 py-3 bg-white border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-shadow"
                         >
                           <option value="">Select a product</option>
-                          {products.map((product) => (
+                          {productOptions.map((product) => (
                             <option key={product} value={product}>
                               {product}
                             </option>
@@ -321,10 +328,10 @@ export default function ContactPage() {
                       <div>
                         <p className="text-sm font-medium mb-1">Phone (HQ)</p>
                         <a
-                          href="tel:+912212345678"
+                          href="tel:+919099049384"
                           className="text-sm text-primary-foreground/90 hover:text-accent transition-colors"
                         >
-                          +91 22 1234 5678
+                          +91 909 904 9384
                         </a>
                       </div>
                     </div>
@@ -377,7 +384,7 @@ export default function ContactPage() {
                   <p className="text-sm text-muted leading-relaxed mb-4">
                     Schedule a visit to our facilities or meet our team at one of our global offices.
                   </p>
-                  <a href="/locations" className="text-sm font-medium text-primary hover:text-accent transition-colors">
+                  <a href="/global-presence" className="text-sm font-medium text-primary hover:text-accent transition-colors">
                     View All Locations →
                   </a>
                 </div>
@@ -452,5 +459,27 @@ export default function ContactPage() {
       </main>
       <Footer />
     </>
+  )
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense
+      fallback={
+        <>
+          <Header />
+          <main className="pt-28">
+            <section className="py-20 bg-white">
+              <div className="container">
+                <div className="text-center">Loading...</div>
+              </div>
+            </section>
+          </main>
+          <Footer />
+        </>
+      }
+    >
+      <ContactForm />
+    </Suspense>
   )
 }

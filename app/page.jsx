@@ -4,13 +4,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import GlobalReachMap from "@/components/global-reach-map";
-import {
-  ArrowRight,
-  Globe,
-  Leaf,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowRight, Globe, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function HomePage() {
   const products = [
@@ -88,14 +82,6 @@ export default function HomePage() {
     },
   ];
 
-  const regions = [
-    { name: "West Africa", countries: "15+ Countries", image: "/africa.png" },
-    { name: "Middle East", countries: "8+ Countries" },
-    { name: "Europe", countries: "12+ Countries" },
-    { name: "SouthEast Asia", countries: "6+ Countries" },
-    { name: "South Asia", countries: "6+ Countries" },
-  ];
-
   const values = [
     {
       icon: null,
@@ -123,8 +109,8 @@ export default function HomePage() {
     },
   ];
 
-  const tileBackgroundStyle = {
-    backgroundImage: "white_tiles.jpg",
+  const highlightsBackgroundStyle = {
+    backgroundImage: 'url("/white_tiles.jpg")',
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
@@ -263,170 +249,177 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Products Carousel */}
-        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-secondary">
-          <div className="container px-4 sm:px-6">
-            <div className="text-center mb-10 sm:mb-12 md:mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">
-                Our Products
-              </h2>
-              <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed px-2">
-                A diverse portfolio of premium agricultural and consumer
-                products
-              </p>
-            </div>
-            <div className="relative px-2 sm:px-4 md:px-8 lg:px-14 xl:px-20 overflow-hidden">
-              {/* Navigation Buttons */}
-              <button
-                onClick={handlePrevious}
-                className="absolute left-0 sm:left-1 md:left-2 lg:left-2 xl:left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated hover:scale-110 active:scale-95 touch-manipulation"
-                aria-label="Previous products"
-              >
-                <ChevronLeft
-                  size={18}
-                  className="sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 transition-colors duration-200 text-primary"
-                />
-              </button>
-              <button
-                onClick={handleNext}
-                className="absolute right-0 sm:right-1 md:right-2 lg:right-2 xl:right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated hover:scale-110 active:scale-95 touch-manipulation"
-                aria-label="Next products"
-              >
-                <ChevronRight
-                  size={18}
-                  className="sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 transition-colors duration-200 text-primary"
-                />
-              </button>
+        <div
+          id="home-highlights-group"
+          className="bg-secondary/90"
+          style={highlightsBackgroundStyle}
+        >
+          {/* Products Carousel */}
+          <section className="py-12 sm:py-16 md:py-20 lg:py-24">
+            <div className="container px-4 sm:px-6">
+              <div className="text-center mb-10 sm:mb-12 md:mb-16">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">
+                  Our Products
+                </h2>
+                <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed px-2">
+                  A diverse portfolio of premium agricultural and consumer
+                  products
+                </p>
+              </div>
+              <div className="relative px-2 sm:px-4 md:px-8 lg:px-14 xl:px-20 overflow-hidden">
+                {/* Navigation Buttons */}
+                <button
+                  onClick={handlePrevious}
+                  className="absolute left-0 sm:left-1 md:left-2 lg:left-2 xl:left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated hover:scale-110 active:scale-95 touch-manipulation"
+                  aria-label="Previous products"
+                >
+                  <ChevronLeft
+                    size={18}
+                    className="sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 transition-colors duration-200 text-primary"
+                  />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="absolute right-0 sm:right-1 md:right-2 lg:right-2 xl:right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-white shadow-xl flex items-center justify-center transition-transform duration-200 gpu-accelerated hover:scale-110 active:scale-95 touch-manipulation"
+                  aria-label="Next products"
+                >
+                  <ChevronRight
+                    size={18}
+                    className="sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 transition-colors duration-200 text-primary"
+                  />
+                </button>
 
-                  {/* Products Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 px-12 sm:px-5 md:px-6 lg:px-4">
-                    {visibleProducts.map((product) => (
-                      <div
-                        key={product.name}
-                        className="group bg-card rounded-xl overflow-hidden shadow-lg border border-border gpu-lift-hover hover:shadow-2xl"
-                      >
-                        <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
+                {/* Products Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 px-12 sm:px-5 md:px-6 lg:px-4">
+                  {visibleProducts.map((product) => (
+                    <div
+                      key={product.name}
+                      className="group bg-card rounded-xl overflow-hidden shadow-lg border border-border gpu-lift-hover hover:shadow-2xl"
+                    >
+                      <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
+                        <img
+                          src={product.image || "/placeholder.svg"}
+                          alt={product.name}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110 gpu-accelerated"
+                        />
+                      </div>
+                      <div className="p-4 sm:p-5 md:p-6">
+                        <h3 className="text-xl sm:text-2xl font-serif font-bold mb-2 sm:mb-3 text-foreground">
+                          {product.name}
+                        </h3>
+                        <p className="text-sm sm:text-base text-muted mb-4 sm:mb-5 leading-relaxed">
+                          {product.description}
+                        </p>
+                        <a
+                          href={`/products?id=${product.id}`}
+                          className="inline-flex items-center text-sm sm:text-base font-semibold text-primary hover:text-accent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent rounded px-2 py-1 min-h-[44px] touch-manipulation"
+                        >
+                          Learn More
+                          <ArrowRight
+                            size={16}
+                            className="sm:w-[18px] sm:h-[18px] ml-2 transition-transform duration-200 group-hover:translate-x-1 gpu-accelerated"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Carousel Indicators */}
+                <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8 px-2">
+                  {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentProductIndex(index)}
+                      className={`h-2 sm:h-2.5 rounded-full transition-all duration-200 gpu-accelerated touch-manipulation ${
+                        index === currentProductIndex
+                          ? "bg-primary w-8 sm:w-10"
+                          : "bg-muted w-2 sm:w-2.5 hover:bg-primary/50"
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Global Reach Section */}
+          <section className="py-12 sm:py-16 md:py-20 lg:py-24">
+            <div className="container px-4 sm:px-6">
+              <div className="text-center mb-10 sm:mb-12 md:mb-16">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">
+                  Global Reach
+                </h2>
+                <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed px-2">
+                  Serving markets across four continents with reliable supply
+                  chains
+                </p>
+              </div>
+            </div>
+            <GlobalReachMap />
+            <div className="container px-4 sm:px-6">
+              <div className="text-center mt-8">
+                <a
+                  href="/global-presence"
+                  className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground font-semibold text-base sm:text-lg rounded-lg shadow-lg focus:ring-4 focus:ring-primary/50 gpu-scale-hover min-h-[44px] touch-manipulation"
+                >
+                  View Full Map
+                  <ArrowRight
+                    size={18}
+                    className="sm:w-5 sm:h-5 ml-2 sm:ml-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </section>
+
+          {/* Why Choose The King Group Section */}
+          <section className="py-12 sm:py-16 md:py-20 lg:py-24">
+            <div className="container px-4 sm:px-6">
+              <div className="text-center mb-10 sm:mb-12 md:mb-16">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">
+                  Why Choose The King Group
+                </h2>
+                <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed px-2">
+                  Built on trust, quality, and sustainable practices
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+                {values.map((value) => {
+                  const Icon = value.icon;
+                  return (
+                    <div key={value.title} className="text-center">
+                      <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-accent rounded-full mb-4 sm:mb-6 shadow-lg gpu-accelerated">
+                        {value.image ? (
                           <img
-                            src={product.image || "/placeholder.svg"}
-                            alt={product.name}
+                            src={value.image || "/placeholder.svg"}
+                            alt={value.title}
                             loading="lazy"
                             decoding="async"
-                            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110 gpu-accelerated"
+                            className="w-8 h-8 sm:w-10 sm:h-10 object-contain gpu-accelerated"
                           />
-                        </div>
-                        <div className="p-4 sm:p-5 md:p-6">
-                          <h3 className="text-xl sm:text-2xl font-serif font-bold mb-2 sm:mb-3 text-foreground">
-                            {product.name}
-                          </h3>
-                          <p className="text-sm sm:text-base text-muted mb-4 sm:mb-5 leading-relaxed">
-                            {product.description}
-                          </p>
-                          <a
-                            href={`/products?id=${product.id}`}
-                            className="inline-flex items-center text-sm sm:text-base font-semibold text-primary hover:text-accent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent rounded px-2 py-1 min-h-[44px] touch-manipulation"
-                          >
-                            Learn More
-                            <ArrowRight
-                              size={16}
-                              className="sm:w-[18px] sm:h-[18px] ml-2 transition-transform duration-200 group-hover:translate-x-1 gpu-accelerated"
-                            />
-                          </a>
-                        </div>
+                        ) : (
+                          <Icon
+                            size={28}
+                            className="sm:w-9 sm:h-9 text-accent-foreground"
+                          />
+                        )}
                       </div>
-                    ))}
-                  </div>
-
-                  {/* Carousel Indicators */}
-                  <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8 px-2">
-                    {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentProductIndex(index)}
-                        className={`h-2 sm:h-2.5 rounded-full transition-all duration-200 gpu-accelerated touch-manipulation ${
-                          index === currentProductIndex
-                            ? "bg-primary w-8 sm:w-10"
-                            : "bg-muted w-2 sm:w-2.5 hover:bg-primary/50"
-                        }`}
-                        aria-label={`Go to slide ${index + 1}`}
-                      />
-                    ))}
-                  </div>
-                </div>
+                      <h3 className="text-xl sm:text-2xl font-serif font-bold mb-3 sm:mb-4 text-foreground">
+                        {value.title}
+                      </h3>
+                      <p className="text-sm sm:text-base text-muted leading-relaxed px-2">
+                        {value.description}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
-            </section>
-
-        {/* Global Reach Section */}
-        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50">
-          <div className="container px-4 sm:px-6">
-            <div className="text-center mb-10 sm:mb-12 md:mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">
-                Global Reach
-              </h2>
-              <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed px-2">
-                Serving markets across four continents with reliable supply
-                chains
-              </p>
             </div>
-          </div>
-          <GlobalReachMap />
-          <div className="container px-4 sm:px-6">
-            <div className="text-center mt-8">
-              <a
-                href="/global-presence"
-                className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground font-semibold text-base sm:text-lg rounded-lg shadow-lg focus:ring-4 focus:ring-primary/50 gpu-scale-hover min-h-[44px] touch-manipulation"
-              >
-                View Full Map
-                <ArrowRight size={18} className="sm:w-5 sm:h-5 ml-2 sm:ml-3" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-            {/* Why Choose The King Group Section */}
-            <section className="py-12 sm:py-16 md:py-20 lg:py-24">
-              <div className="container px-4 sm:px-6">
-                <div className="text-center mb-10 sm:mb-12 md:mb-16">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6">
-                    Why Choose The King Group
-                  </h2>
-                  <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed px-2">
-                    Built on trust, quality, and sustainable practices
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
-                  {values.map((value) => {
-                    const Icon = value.icon;
-                    return (
-                      <div key={value.title} className="text-center">
-                        <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-accent rounded-full mb-4 sm:mb-6 shadow-lg gpu-accelerated">
-                          {value.image ? (
-                            <img
-                              src={value.image || "/placeholder.svg"}
-                              alt={value.title}
-                              loading="lazy"
-                              decoding="async"
-                              className="w-8 h-8 sm:w-10 sm:h-10 object-contain gpu-accelerated"
-                            />
-                          ) : (
-                            <Icon
-                              size={28}
-                              className="sm:w-9 sm:h-9 text-accent-foreground"
-                            />
-                          )}
-                        </div>
-                        <h3 className="text-xl sm:text-2xl font-serif font-bold mb-3 sm:mb-4 text-foreground">
-                          {value.title}
-                        </h3>
-                        <p className="text-sm sm:text-base text-muted leading-relaxed px-2">
-                          {value.description}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
+          </section>
         </div>
 
         {/* CTA Section */}

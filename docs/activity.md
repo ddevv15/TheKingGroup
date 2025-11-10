@@ -2395,3 +2395,228 @@
   - TypeScript files in `components/ui/` still compile correctly
   - Build is ready for production deployment
   - No impact on functionality - `/code` was never used in production
+
+## 2025-11-08 (Optimize Geo Tag Icon Sizes for Mobile)
+
+- Prompt: "the geo tag icons we are using, on mobile screen the tags look really big lets optimize it to make them smaller only in the mobile screen"
+
+- Actions:
+  - Reduced geo tag icon size on mobile screens in `components/office-marker.jsx`:
+    - **Mobile**: Changed from `w-8 h-8` (32px) to `w-5 h-5` (20px)
+    - **Tablet**: Remains `w-7 h-7` (28px) - unchanged
+    - **Desktop**: Remains `w-6 h-6` (24px) - unchanged
+
+- Files Modified:
+  - `components/office-marker.jsx` - Reduced mobile marker size
+
+- Notes:
+  - Geo tags now appear more proportional on mobile screens
+  - Smaller size improves visual balance with map on mobile devices
+  - Touch targets remain accessible (entire marker area is clickable)
+  - Tablet and desktop sizes unchanged for optimal viewing
+  - Better user experience on mobile devices
+
+## 2025-01-27 (Restore White Navbar Background and Change Header Text to Primary Color)
+
+- Prompt: "lets change the navbar back to how it was with a white bg and change th text color in the header to primary"
+
+- Actions:
+  - Changed navbar background from transparent to white in `components/card-nav.jsx`:
+    - **Navbar background**: Changed from `bg-transparent md:bg-transparent` to `bg-white`
+    - Removed conditional `backdrop-blur-md bg-white/90` that only appeared when hamburger menu was open
+    - Navbar now has consistent white background at all times
+  - Changed header text colors from white to primary color:
+    - **Logo text** ("The King Group"): Changed from `color: "#ffffff"` to `text-primary` Tailwind class
+    - **Desktop navigation menu items** ("About", "Products", "Contact"): Changed from `color: "#ffffff"` to `text-primary` class
+    - **Mobile navigation menu items**: Changed from `color: "#ffffff"` to `text-primary` class
+    - **Mobile menu dropdown items**: Changed from `menuColor || "#1e3a5f"` inline style to `text-primary` class
+    - **Hamburger menu icon**: Changed from inline `style={{ color: menuColor || "#1e3a5f" }}` to `text-primary` class
+  - Updated hover states for white background:
+    - Changed desktop nav hover from `hover:bg-white/30` to `hover:bg-primary/10` (works better on white background)
+    - Changed mobile menu hover from `hover:bg-white/30` to `hover:bg-primary/10`
+    - Improved visual feedback with primary color hover states
+  - Improved mobile menu border visibility:
+    - Changed border from `border-gray-200/50` to `border-gray-200` for better visibility on white background
+
+- Files Modified:
+  - `components/card-nav.jsx` - Updated navbar background and all text colors to primary
+
+- Notes:
+  - Navbar now has clean white background matching original design
+  - All header text (logo, menu items, mobile menu) uses primary color (deep blue) for better contrast on white
+  - Hover states updated to work properly with white background
+  - Consistent styling across desktop and mobile views
+  - Better readability with primary color text on white background
+  
+## 2025-01-27 (Remove Overview Section from Product Detail Pages)
+
+- Prompt: "remove the overview section form all the product pages as the sub title and the overview section has the same content inside it so its repetitive"
+
+- Actions:
+  - Removed the "Overview" section from `app/products/[id]/page.jsx`.
+  - Kept hero subtitle (short summary) as the single source of the product overview to avoid repetition.
+
+- Rationale:
+  - The hero subtitle and the Overview section contained the same content (product description), creating redundancy.
+  - Simplifies the detail page while keeping all other sections (Varieties, Specifications, Origins, Destinations, Certifications, Packaging, CTA).
+
+- Result:
+  - Cleaner product detail pages without duplicated content.
+  - No impact on SEO metadata; descriptions still included in `generateMetadata`.
+  - No layout or linter issues introduced.
+
+## 2025-01-27 (Add Google Analytics Tag)
+
+- Prompt: "Install manually Recommended ... Copy and paste it in the code of every page of your website, immediately after the <head> element."
+
+- Actions:
+  - Imported `Script` from `next/script` in `app/layout.jsx`.
+  - Added the Google tag snippet directly inside the `<head>` element so it loads on every page:
+    - Async loader: `https://www.googletagmanager.com/gtag/js?id=G-6202592FZL`
+    - Inline initialization script configuring `window.dataLayer` and `gtag('config', 'G-6202592FZL')`
+  - Used `strategy="afterInteractive"` for both scripts to follow Next.js best practices while keeping execution after hydration.
+
+- Result:
+  - Google Analytics (GA4) now loads globally across the site without duplicate tags.
+  - Implementation respects the requirement to place the snippet immediately after `<head>` and avoids multiple instances.
+
+## 2025-01-27 (Install Google Tag Manager Snippet)
+
+- Prompt: "Copy the code below and paste it onto every page of your website." (GTM script in `<head>` and `<noscript>` in `<body>`).
+
+- Actions:
+  - Added the Google Tag Manager bootstrap script (container `GTM-MRRGD2QP`) at the top of the `<head>` in `app/layout.jsx` using a synchronous inline `<Script>` block.
+  - Inserted the required `<noscript>` fallback iframe immediately after the opening `<body>` tag so that GTM still fires when JavaScript is disabled.
+  - Preserved existing Google Analytics script; both tags now coexist without duplication.
+
+- Result:
+  - GTM is injected across all pages via the root layout, matching the manual install instructions.
+  - Noscript fallback ensures tag manager works for non-JS clients.
+
+## 2025-01-27 (Refactor Products to Dedicated Pages)
+
+- Prompt: Refactor products catalog from expandable cards to minimal cards that route to dedicated product detail pages
+
+- Actions:
+  - **Created shared product data file** (`data/products.js`):
+    - Extracted products array from `app/products/page.jsx`
+    - Added optional `certs[]` and `packaging{}` fields to product structure
+    - Created helper functions: `getProductById(id)`, `getAllProducts()`, `getProductsByCategory(category)`, `getCategories()`
+    - All 11 products now have stable IDs and complete data structure
+  - **Created minimal product card component** (`components/ProductCardMinimal.jsx`):
+    - Displays only: product image, category badge, product name
+    - Entire card is a clickable link to `/products/[id]`
+    - Hover lift effect and focus ring for accessibility
+    - Uses `next/image` for optimized image loading
+    - Compact, image-focused design
+  - **Refactored products index page** (`app/products/page.jsx`):
+    - Removed all expandable panels, modal logic, and state management
+    - Removed scroll-to-product functionality
+    - Replaced full product cards with minimal `ProductCardMinimal` components
+    - Changed grid to `grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8`
+    - Kept category filter functionality (client-side state)
+    - Kept hero section, services section, and CTA section
+    - Now imports products from shared `data/products.js`
+  - **Created product detail page** (`app/products/[id]/page.jsx`):
+    - Server Component with async function
+    - Uses `getProductById(params.id)` to fetch product data
+    - Calls `notFound()` if product doesn't exist
+    - Sections (in order):
+      1. Breadcrumbs: Home › Products › {Product Name}
+      2. Hero: Title, category badge, hero image, short summary
+      3. Overview: Long description
+      4. Varieties/Grades: All varieties displayed as cards (hidden if empty)
+      5. Specifications: Key/value grid (hidden if empty)
+      6. Origins & Export Destinations: Two-column layout with icons
+      7. Certificates: Displayed if `certs.length > 0` (hidden if empty)
+      8. Packaging: Displayed if `packaging` exists (hidden if empty)
+      9. CTA: "Request Quote" button linking to `/contact?product={id}`
+    - Uses `next/image` for hero image with proper sizing
+    - Responsive typography and spacing
+    - Handles both array and string formats for origin/destinations
+  - **Created not-found page** (`app/products/[id]/not-found.jsx`):
+    - Simple not-found UI matching site style
+    - Link back to `/products`
+    - Message: "Product not found"
+  - **Added SEO metadata** (`app/products/[id]/page.jsx`):
+    - `generateMetadata({ params })` function
+    - Title: `{Product Name} | The King Group`
+    - Description: Trimmed product description (150-160 chars)
+    - OpenGraph: Image, locale `en_IN`, type `'product'`
+  - **Updated contact page** (`app/contact/page.jsx`):
+    - Reads `?product` query parameter using `useSearchParams()`
+    - Preselects product in dropdown if `?product={id}` is present
+    - Maps product ID to product name for dropdown
+    - Wrapped in `Suspense` boundary for `useSearchParams()`
+    - Imports products from shared `data/products.js`
+  - **Footer product links** (`components/footer.jsx`):
+    - Kept links pointing to `/products` (allows users to browse)
+    - No changes needed - simpler and more maintainable
+
+- Files Created:
+  - `data/products.js` - Shared product data with helper functions
+  - `components/ProductCardMinimal.jsx` - Minimal product card component
+  - `app/products/[id]/page.jsx` - Product detail page with full information
+  - `app/products/[id]/not-found.jsx` - Not found page for unknown product IDs
+
+- Files Modified:
+  - `app/products/page.jsx` - Refactored to use minimal cards, removed expandable panels
+  - `app/contact/page.jsx` - Added product preselection from URL query parameter
+
+- Technical Improvements:
+  - Server-side rendering for product detail pages (better SEO and performance)
+  - Shared data source eliminates duplication
+  - Clean separation of concerns (minimal cards vs. detail pages)
+  - Proper error handling with not-found page
+  - SEO-optimized metadata for each product
+  - Accessible navigation with breadcrumbs
+  - Responsive design maintained across all screen sizes
+
+- UX Improvements:
+  - Faster page loads (minimal cards on index)
+  - Better information architecture (dedicated pages for full details)
+  - Improved navigation flow (breadcrumbs, clear CTAs)
+  - Seamless product-to-contact flow (preselected product in form)
+  - No hidden content (all information visible on detail pages)
+
+- Notes:
+  - All expandable panels and modal logic removed from products index
+  - Product detail pages show all information without clipping
+  - Edge cases handled: empty varieties, missing certs/packaging, unknown product IDs
+  - Contact form automatically preselects product when coming from product detail page
+  - Footer product links remain simple (point to /products for browsing)
+  - All 11 products have dedicated pages at `/products/[id]`
+  - Mobile layouts tested and optimized
+  - No console errors or hydration mismatches
+  - Lighthouse scores maintained
+
+## 2025-11-10 (Resolve Home Page Merge Errors)
+
+- Prompt: "Fix the errors in the @page.jsx"
+
+- Actions:
+  - Removed leftover merge-conflict structure and realigned the products carousel markup in `app/page.jsx`.
+  - Deleted unused imports and constants introduced during the conflicted merge to clear lint errors.
+  - Confirmed all homepage sections render sequentially without extra wrappers.
+
+- Files Modified:
+  - `app/page.jsx` - Cleaned merge artifacts, tightened component structure, and trimmed unused code.
+
+- Notes:
+  - Home page now builds without JSX syntax warnings.
+  - Carousel controls and indicators continue to function across breakpoints.
+
+## 2025-11-10 (Group Home Highlights Sections with Tile Background)
+
+- Prompt: "Group the 'Our Products', 'Global Reach' and 'Why choose the king group' sections in @page.jsx , and then change the bg to @white_tiles.jpg no other change is required"
+
+- Actions:
+  - Wrapped the three homepage highlight sections inside a single `div` (`id="home-highlights-group"`) in `app/page.jsx`.
+  - Applied an inline style referencing `/white_tiles.jpg` to provide the requested background imagery.
+  - Preserved all internal section content and layout.
+
+- Files Modified:
+  - `app/page.jsx` - Added grouped wrapper with shared background styling.
+
+- Notes:
+  - Each section retains existing spacing and behavior while sharing the new tile backdrop.

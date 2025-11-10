@@ -358,9 +358,7 @@ const CardNav = ({
     >
       <nav
         ref={navRef}
-        className={`card-nav w-full bg-transparent md:bg-transparent ${
-          isHamburgerOpen ? "backdrop-blur-md bg-white/90" : ""
-        }`}
+        className={`card-nav w-full bg-white`}
       >
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
@@ -374,8 +372,8 @@ const CardNav = ({
               ) : (
               <span
                 id="navbar-brand-the-king-group"
-                className="text-xl md:text-2xl font-bold"
-                style={{ color: "#ffffff", fontFamily: "DM Serif Display, Georgia, serif" }}
+                className="text-xl md:text-2xl font-bold text-primary"
+                style={{ fontFamily: "DM Serif Display, Georgia, serif" }}
               >
                 {logoAlt}
               </span>
@@ -393,8 +391,7 @@ const CardNav = ({
                   onMouseLeave={handleMouseLeave}
                 >
                   <button
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-primary/20 pointer-events-auto"
-                    style={{ color: "#ffffff" }}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-primary/10 text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 pointer-events-auto"
                   >
                     {menu.label}
                     <ChevronDown
@@ -442,14 +439,13 @@ const CardNav = ({
 
             {/* Mobile Hamburger Menu */}
             <button
-              className="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-lg z-50"
+              className="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-lg z-50 text-primary"
               onClick={(e) => {
                 e.stopPropagation()
                 setIsHamburgerOpen((prev) => !prev)
               }}
               aria-label={isHamburgerOpen ? "Close menu" : "Open menu"}
               aria-expanded={isHamburgerOpen}
-              style={{ color: menuColor || "#1e3a5f" }}
             >
               <div
                 className={`w-6 h-0.5 bg-current transition-all duration-300 ${
@@ -475,7 +471,7 @@ const CardNav = ({
               isHamburgerOpen ? "max-h-[600px] opacity-100 pointer-events-auto" : "max-h-0 opacity-0 pointer-events-none"
             }`}
           >
-            <div className="py-4 space-y-1 border-t border-gray-200/50">
+            <div className="py-4 space-y-1 border-t border-gray-200">
               {Object.entries(menuItems).map(([key, menu]) => (
                 <div key={key} className="space-y-1">
                   <button
@@ -483,8 +479,7 @@ const CardNav = ({
                       e.stopPropagation()
                       toggleDropdown(key)
                     }}
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/30"
-                    style={{ color: "#ffffff" }}
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors hover:bg-primary/10 text-primary"
                   >
                     {menu.label}
                     <ChevronDown
@@ -499,8 +494,7 @@ const CardNav = ({
                         <Link
                           key={idx}
                           href={item.href}
-                          className="block px-4 py-2.5 text-sm rounded-lg transition-colors hover:bg-white/30"
-                          style={{ color: menuColor || "#1e3a5f" }}
+                          className="block px-4 py-2.5 text-sm rounded-lg transition-colors hover:bg-primary/10 text-primary"
                           onClick={() => {
                             setOpenDropdown(null)
                             setIsHamburgerOpen(false)

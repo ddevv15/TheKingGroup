@@ -74,7 +74,7 @@ export default function AboutPage() {
                 <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">Our Story</h2>
                 <div className="space-y-4 text-lg text-muted leading-relaxed">
                   <p>
-                  Founded on over a decade of deep experience in the raw cotton trade that began with Komal Amin Exports in Ahmedabad, Gujarat, The King Group evolved from an agro-commodities sourcing specialist specialist into a diversified agri-export and commodity trading consortium. Early mastery of raw cotton sourcing, quality control, and export documentation created the operational backbone for broader commodity exports.
+                  Founded on over a decade of deep experience in the raw cotton trade that began with Komal Amin Exports in Ahmedabad, Gujarat, The King Group evolved from an agro-commodities sourcing specialist into a diversified agri-export and commodity trading consortium. Early mastery of raw cotton sourcing, quality control, and export documentation created the operational backbone for broader commodity exports.
                   </p>
                   <p>
                   Since formalizing operations with The Karunesh Corporation in 2019, the group expanded into rice, cashew, oilseeds, spices, tiles, pharmaceuticals, and FMCG — supplying certified agricultural products to buyers across Africa, the Middle East, Southeast Asia and the Americas. Integrated supply-chain management, vendor partnerships, and rigorous laboratory testing ensure traceability, export-grade packing and on-time delivery for international markets.

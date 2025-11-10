@@ -11,6 +11,7 @@ export default function Footer() {
     "Tiles",
     "Pharma",
     "Supermarket Products",
+    "Others"
   ]
 
   const quickLinks = [
